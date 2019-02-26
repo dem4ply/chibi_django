@@ -66,16 +66,16 @@ def assert_status_code( response, status_ok, print_headers=False ):
         response_data = madness.string.decode( response.content )
         response_data = json.loads( response_data )
     if print_headers:
-        msg = ( "\nEl status code deberia de ser {} pero se recivo {}\n"
-                "url: {}"
-                "El data de la respuesta es:\n{}"
+        msg = ( "\nthe status code should be '{}' but is '{}'\n"
+                "url: {}\n"
+                "the data of the response is:\n{}"
                 ).format( status_ok, response.status_code,
                           get_url_of_response( response ),
                           pformat( response_data ) )
     else:
-        msg = ( "\nEl status code deberia de ser {} pero se recivo {}\n"
-                "url: {}"
-                "El data de la respuesta es:\n{}"
+        msg = ( "\nthe status code should be '{}' but is '{}'\n"
+                "url: {}\n"
+                "the data of the response is:\n{}"
                 ).format( status_ok, response.status_code,
                           get_url_of_response( response ),
                           pformat( response_data ) )
@@ -91,18 +91,21 @@ def assert_data( response, data, print_headers=False ):
         response_data = mad_string.decode( response.content )
         response_data = json.loads( response_data )
     if print_headers:
-        msg = ( "\nEl data de la respuesta no es el esperado\n"
-                "el status code es {}\n"
-                "El data de la respuesta es:\n{}\nEl esperado es:\n{}"
-                ).format( response.status_code,
-                          pformat( response_data ), pformat( data ) )
+        msg = (
+            "\nthe data of the aswer is not the expected\n"
+            "status code: {}\ndata:\n{}\n"
+            "expected data:\n{}").format(
+                response.status_code, pformat( response_data ),
+                pformat( data ) )
     else:
-        msg = ( "\nEl data de la respuesta no es el esperado\n"
-                "el status code es {}\n"
-                "El data de la respuesta es:\n{}\nEl esperado es:\n{}"
-                ).format( response.status_code,
-                          pformat( response_data ), pformat( data ) )
+        msg = (
+            "\nthe data of the aswer is not the expected\n"
+            "status code: {}\ndata:\n{}\n"
+            "expected data:\n{}").format(
+                response.status_code, pformat( response_data ),
+                pformat( data ) )
     tc.assertEqual( response_data, data, msg )
+
 
 def assert_data_subset( response, data, print_headers=False ):
     try:
@@ -111,15 +114,17 @@ def assert_data_subset( response, data, print_headers=False ):
         response_data = mad_string.decode( response.content )
         response_data = json.loads( response_data )
     if print_headers:
-        msg = ( "\nEl data de la respuesta no es el esperado\n"
-                "el status code es {}\n"
-                "El data de la respuesta es:\n{}\nEl esperado es:\n{}"
-                ).format( response.status_code,
-                          pformat( response_data ), pformat( data ) )
+        msg = (
+            "\nthe data of the aswer is not the expected\n"
+            "status code: {}\ndata:\n{}\n"
+            "expected data:\n{}").format(
+                response.status_code, pformat( response_data ),
+                pformat( data ) )
     else:
-        msg = ( "\nEl data de la respuesta no es el esperado\n"
-                "el status code es {}\n"
-                "El data de la respuesta es:\n{}\nEl esperado es:\n{}"
-                ).format( response.status_code,
-                          pformat( response_data ), pformat( data ) )
+        msg = (
+            "\nthe data of the aswer is not the expected\n"
+            "status code: {}\ndata:\n{}\n"
+            "expected data:\n{}").format(
+                response.status_code, pformat( response_data ),
+                pformat( data ) )
     tc.assertDictContainsSubset( data, response_data, msg )
