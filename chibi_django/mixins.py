@@ -59,7 +59,7 @@ class Update_model:
         serializer.is_valid( raise_exception=True )
         self.perform_update( serializer )
         return Response( status=status.HTTP_204_NO_CONTENT )
-        #return Response( serializer.data )
+        # return Response( serializer.data )
 
     def perform_update( self, serializer ):
         serializer.save()

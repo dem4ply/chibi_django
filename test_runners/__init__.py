@@ -5,8 +5,8 @@ from django.conf import settings
 from django.test.runner import DiscoverRunner
 
 
-#sys.stdout = None
-#requests.packages.urllib3.disable_warnings( InsecureRequestWarning )
+# sys.stdout = None
+# requests.packages.urllib3.disable_warnings( InsecureRequestWarning )
 
 
 class CustomizedRunner( DiscoverRunner ):
@@ -23,7 +23,7 @@ class CustomizedRunner( DiscoverRunner ):
     def setup_test_environment( self, **kargs ):
         super().setup_test_environment( **kargs )
         settings.CELERY_ALWAYS_EAGER = True
-        settings.CELERY_EAGER_PROPAGATES_EXCEPTIONS = True # Issue #75
+        settings.CELERY_EAGER_PROPAGATES_EXCEPTIONS = True  # Issue #75
         settings.DEBUG = False
 
 

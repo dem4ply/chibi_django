@@ -11,7 +11,7 @@ class Test_user_manager( TestCase ):
         self.assertTrue( user_save.called )
         self.assertTrue( token_save.called )
         self.assertEqual( user.username, "test" )
-        self.assertEqual( user.password, "password" )
+        self.assertEqual( user._password, "password" )
         self.assertTrue( user.is_active )
         self.assertFalse( user.is_staff )
 

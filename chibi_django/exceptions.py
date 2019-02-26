@@ -1,5 +1,3 @@
-#from madcore.exceptions import Not_found
-#from madcore.exceptions.http import MadHttp
 from rest_framework import status
 from rest_framework.views import set_rollback
 from rest_framework.response import Response

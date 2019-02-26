@@ -26,8 +26,9 @@ class Base_64_pk( models.Manager ):
             is_pk_exists = self.filter( pk=try_pk ).count()
             if is_pk_exists == 0:
                 break
-            logger.warinig( "colicion de pks",
-                extra= {
+            logger.warinig(
+                "colicion de pks",
+                extra={
                     'number_pk_collide': 1, 'pk_collide': [ try_pk ],
                     'length_of_pk': start, 'count_of_retry': count_retry,
                     'max_length_pk': max_field_pk,

@@ -2,7 +2,6 @@ from django.test import TestCase, override_settings
 from django.utils import six
 from rest_framework import status
 from rest_framework.test import APIClient
-from rest_framework.reverse import reverse
 
 from chibi_user.models import Token
 from chibi_user.tests import get_user_test
@@ -19,7 +18,7 @@ class BaseTokenAuthTests( object ):
         self.user, self.token = get_user_test()
         self.username = self.user.username
         self.key = self.token.key
-        #self.path = reverse( self.url_name )
+        # self.path = reverse( self.url_name )
 
     def test_post_form_passing_token_auth( self ):
         """

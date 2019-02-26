@@ -74,9 +74,8 @@ class Link_header_pagination( pagination.PageNumberPagination ):
             self._page_size = 100
         self._num_pages = self.get_pages( self._data )
         self._page_number = self.request.query_params.get(
-                self.page_query_param, 0 )
+            self.page_query_param, 0 )
         self._page_number = int( self._page_number )
-
 
         if self.check_is_last_page():
             self._page_number = self._num_pages

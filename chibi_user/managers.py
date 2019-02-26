@@ -3,7 +3,6 @@ from chibi import madness
 from chibi_django.managers import Base_64_pk
 
 
-
 class User_manager( Base_64_pk, BaseUserManager ):
 
     def create( self, *args, password='', **kw ):

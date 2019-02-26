@@ -41,7 +41,7 @@ clean:
 
 pep8:
 	@echo "Running pep8 tests..."
-	@pep8 --statistics ${modules}
+	@pep8 --exclude='*/migrations/*' --statistics ${modules}
 
 flakes:
 	@echo "Running flakes tests..."

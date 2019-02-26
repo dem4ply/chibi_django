@@ -5,6 +5,7 @@ from chibi import madness
 
 AUTH_USER_MODEL = getattr( settings, 'AUTH_USER_MODEL', 'mad_users.User' )
 
+
 @python_2_unicode_compatible
 class Token( models.Model ):
     user = models.OneToOneField(

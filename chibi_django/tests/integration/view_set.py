@@ -1,24 +1,12 @@
-from django.urls import path, include
-from rest_framework.reverse import reverse
-from rest_framework.test import APIClient
-from django.test import TestCase, override_settings
-import unittest
-from django.http import HttpResponse
-from rest_framework import permissions
-from rest_framework.test import APIRequestFactory
-from rest_framework.views import APIView
-from rest_framework import viewsets
-
-from rest_framework import status
-from rest_framework.response import Response
-
-from chibi_user.authentication import Token_simple_authentication
-from chibi_user.models import User as User_model, Token as Token_model
-from chibi_django.view_set import Model_viewset
-
-from rest_framework_nested import routers
 from django.db import models
-from rest_framework import serializers
+from django.test import TestCase, override_settings
+from rest_framework import status, serializers
+from rest_framework.permissions import AllowAny
+from rest_framework.reverse import reverse
+from rest_framework.test import APIClient, APIRequestFactory
+from rest_framework_nested import routers
+
+from chibi_django.view_set import Model_viewset
 
 
 factory = APIRequestFactory()
@@ -32,9 +20,6 @@ class Action_serializer( serializers.ModelSerializer ):
     class Meta:
         model = Action
         fields = ( 'pk', )
-
-
-from rest_framework.permissions import AllowAny
 
 
 class Mock_View( Model_viewset ):

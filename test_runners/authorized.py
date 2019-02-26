@@ -1,4 +1,3 @@
-from rest_framework import status
 from test_runners import status_code as status_test
 
 

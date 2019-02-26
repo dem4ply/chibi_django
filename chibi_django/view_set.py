@@ -4,7 +4,7 @@ from rest_framework import viewsets
 
 
 class Multi_serializer_viewset( viewsets.GenericViewSet ):
-    def get_serializer( self, *args, serializer_name='default',  **kw ):
+    def get_serializer( self, *args, serializer_name='default', **kw ):
         serializer_class = self.get_serializer_class( serializer_name )
         kw[ 'context' ] = self.get_serializer_context()
         return serializer_class( *args, **kw )

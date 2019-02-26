@@ -1,16 +1,12 @@
 from __future__ import unicode_literals
+
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import exceptions
-from rest_framework.authentication import get_authorization_header, BaseAuthentication
-from chibi_user.models import Token
-
-from django.contrib.auth import get_user_model
-from django.utils.encoding import smart_text
-from django.utils.translation import ugettext as _
-from rest_framework import exceptions
 from rest_framework.authentication import (
-    BaseAuthentication, get_authorization_header
+    get_authorization_header, BaseAuthentication
 )
+
+from chibi_user.models import Token
 
 
 __all__ = [ 'Token_simple_authentication' ]

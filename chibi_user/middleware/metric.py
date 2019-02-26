@@ -4,7 +4,7 @@ from rest_framework import status
 import logging
 
 
-logger = logging.getLogger( 'mad_user.middleware' )
+logger = logging.getLogger( 'chibi_user.middleware' )
 
 
 class User_for_api( object ):

@@ -1,9 +1,9 @@
+import factory
 from factory import fuzzy
 from faker import Factory as Faker_factory
-from chibi_user.models import User as User_model
-from datetime import date
+
 from .token import Token
-import factory
+from chibi_user.models import User as User_model
 
 
 faker = Faker_factory.create()
@@ -15,7 +15,6 @@ class User( factory.DjangoModelFactory ):
     is_staff = fuzzy.FuzzyChoice( [ True, False ] )
 
     token = factory.RelatedFactory( Token, 'user' )
-
 
     class Meta:
         model = User_model

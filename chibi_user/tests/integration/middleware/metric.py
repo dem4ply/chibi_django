@@ -1,13 +1,10 @@
+from datetime import datetime
+from unittest.mock import Mock
+
 from django.test import TestCase, override_settings
 from rest_framework import status
-from rest_framework.test import APIClient
 
-from chibi_user.models import Token
-from chibi_user.tests import get_user_test
-
-from unittest.mock import patch, Mock
 from chibi_user.middleware.metric import User_for_api
-from datetime import datetime
 
 
 @override_settings( ROOT_URLCONF='chibi_user.tests' )

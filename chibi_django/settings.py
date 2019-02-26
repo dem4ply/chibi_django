@@ -92,16 +92,21 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME':
+            'django.contrib.auth.password_validation.'
+            'UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME':
+            'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME':
+            'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME':
+            'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
@@ -131,8 +136,8 @@ REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'chibi_user.authentication.Token_simple_authentication'
-        #'rest_framework.authentication.BasicAuthentication',
-        #'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
@@ -157,8 +162,10 @@ REST_FRAMEWORK = {
     'ALLOWED_VERSIONS': ( 'howard the duck', ),
     'VERSION_PARAM': 'issue',
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
-    'DEFAULT_FILTER_BACKENDS': ( 'django_filters.rest_framework.DjangoFilterBackend', ),
-    'DEFAULT_PAGINATION_CLASS': 'chibi_django.pagination.Link_header_pagination',
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend', ),
+    'DEFAULT_PAGINATION_CLASS':
+        'chibi_django.pagination.Link_header_pagination',
     'PAGE_SIZE': 5,
 }
 
@@ -166,10 +173,12 @@ REST_FRAMEWORK = {
 SOCIAL_AUTH_AUTH0_SCOPE = [ 'openid', 'profile' ]
 
 
-SOCIAL_AUTH_TRAILING_SLASH = False                    # Remove end slash from routes
+SOCIAL_AUTH_TRAILING_SLASH = False  # Remove end slash from routes
 SOCIAL_AUTH_AUTH0_DOMAIN = 'dem-test.auth0.com'
 SOCIAL_AUTH_AUTH0_KEY = 'PM2yfdSM8rmzxbAhfKbvc6dXPACZHQDN'
-SOCIAL_AUTH_AUTH0_SECRET = 'XNdgTZjolhAgHkriw1gZ7Kime6VbZ-p8I5O0EWJHZ-JSrPztc2WNJVV4jnOkSosL'
+SOCIAL_AUTH_AUTH0_SECRET = (
+    'XNdgTZjolhAgHkriw1gZ7Kime6VbZ-p8I5O0EWJHZ-JSrPztc2WNJVV4jnOkSosL'
+)
 
 
 AUTHENTICATION_BACKENDS = {

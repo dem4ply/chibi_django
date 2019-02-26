@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Base64_field( models.CharField ):
 
     def pre_save( self, model_instance, add ):

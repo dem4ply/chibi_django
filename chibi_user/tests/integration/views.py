@@ -27,7 +27,6 @@ class Test_views_normal_user( TestCase ):
         assert_status_code( response, status.HTTP_403_FORBIDDEN )
 
 
-
 @override_settings( ROOT_URLCONF='chibi_user.urls' )
 class Test_views( TestCase ):
     model = Token

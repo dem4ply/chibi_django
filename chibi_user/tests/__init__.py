@@ -1,20 +1,13 @@
-from django.urls import path, include
-from django.http import HttpResponse
-from rest_framework import permissions
-from rest_framework.test import APIRequestFactory
-from rest_framework.views import APIView
-from rest_framework import viewsets
-
-from rest_framework import status
+from rest_framework import permissions, viewsets, status
 from rest_framework.response import Response
-
-from chibi_user.authentication import Token_simple_authentication
-from chibi_user.models import User as User_model, Token as Token_model
-
+from rest_framework.test import APIRequestFactory
 from rest_framework_nested import routers
+
+from chibi_user.models import User as User_model, Token as Token_model
 
 
 factory = APIRequestFactory()
+
 
 def get_superuser_test():
     try:
@@ -44,16 +37,20 @@ class Mock_View_authenticated( viewsets.ViewSet ):
     permission_classes = ( permissions.IsAuthenticated, )
 
     def list( self, request, format=None ):
-        return Response( { 'a': 1, 'b': 2, 'c': 3 }, status=status.HTTP_200_OK )
+        return Response(
+            { 'a': 1, 'b': 2, 'c': 3 }, status=status.HTTP_200_OK )
 
     def retrieve( self, request, pk, format=None ):
-        return Response( { 'a': 1, 'b': 2, 'c': 3 }, status=status.HTTP_200_OK )
+        return Response(
+            { 'a': 1, 'b': 2, 'c': 3 }, status=status.HTTP_200_OK )
 
     def update( self, request, pk, format=None ):
-        return Response( { 'a': 1, 'b': 2, 'c': 3 }, status=status.HTTP_200_OK )
+        return Response(
+            { 'a': 1, 'b': 2, 'c': 3 }, status=status.HTTP_200_OK )
 
     def create( self, request, format=None ):
-        return Response( { 'a': 1, 'b': 2, 'c': 3 }, status=status.HTTP_200_OK )
+        return Response(
+            { 'a': 1, 'b': 2, 'c': 3 }, status=status.HTTP_200_OK )
 
 
 class Mock_view_all_404( viewsets.ViewSet ):

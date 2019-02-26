@@ -17,10 +17,9 @@ class parametrise_hyperlink_identity_field(
         self.lookup_fields = kargs.pop( 'lookup_fields', self.lookup_fields )
         self.lookup_obj_fields = kargs.pop(
             'lookup_obj_fields', self.lookup_obj_fields)
-        self.lookup_request_path= kargs.pop(
+        self.lookup_request_path = kargs.pop(
             'lookup_request_path', self.lookup_request_path )
         super().__init__( *args, **kargs )
-
 
     def get_url( self, obj, view_name, request, format ):
         kargs = {}
@@ -48,8 +47,9 @@ class parametrise_hyperlink_identity_field(
                 for lookup, field in self.lookup_obj_fields:
                     value = obj[ field ]
                     if value is None:
-                        msg = ( "cannot find the field `{}` in the object"
-                            ).format( field )
+                        msg = (
+                            "cannot find the field `{}` in the object"
+                        ).format( field )
                         raise Impossible_build_url( msg )
                     kargs[ lookup ] = value
             else:
@@ -61,8 +61,9 @@ class parametrise_hyperlink_identity_field(
                     else:
                         value = getattr( obj, field )
                     if value is None:
-                        msg = ( "cannot find the field `{}` in the object"
-                            ).format( field )
+                        msg = (
+                            "cannot find the field `{}` in the object"
+                        ).format( field )
                         raise Impossible_build_url( msg )
                     kargs[ lookup ] = value
 
