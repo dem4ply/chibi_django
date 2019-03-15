@@ -62,5 +62,9 @@ class User( view_set.Model_viewset ):
 class Token( view_set.Model_viewset ):
     authentication_classes = [ Token_simple_authentication ]
     permission_classes     = [ IsAdminUser ]
-    queryset               = Token_model.objects.all()
+    # queryset               = Token_model.objects.all()
     serializer_class       = Token_serializer
+
+    def get_queryset( self, *args, **kw ):
+        user_pk = self.kwargs[ 'users_pk' ]
+        return Token_model.objects.filter( user__pk=user_pk )

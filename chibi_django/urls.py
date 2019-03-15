@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from chibi_user import views as chibi_user_views
+from chibi_user import urls as users_urls
 
 urlpatterns = [
     path( '^$', chibi_user_views.index ),
@@ -14,4 +15,5 @@ urlpatterns = [
             ( 'social_django.urls', 'social_django' ),
             namespace='social' ) ),
     path( 'admin/', admin.site.urls ),
+    path( r'', include( ( users_urls, 'users' ), namespace='users' ), ),
 ]

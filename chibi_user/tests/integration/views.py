@@ -1,15 +1,17 @@
-from django.test import TestCase, override_settings
+from django.test import TestCase
+from faker import Factory as Faker_factory
 from rest_framework import status
-from rest_framework.test import APIClient
 from rest_framework.reverse import reverse
+from rest_framework.test import APIClient
 
 from chibi_user.models import Token
 from chibi_user.tests import get_user_test, get_superuser_test
-
 from test_runners.snippet.response import get_location, assert_status_code
 
 
-@override_settings( ROOT_URLCONF='chibi_user.urls' )
+fake = Faker_factory.create()
+
+
 class Test_views_normal_user( TestCase ):
     model = Token
     path = '/token/'
@@ -27,7 +29,6 @@ class Test_views_normal_user( TestCase ):
         assert_status_code( response, status.HTTP_403_FORBIDDEN )
 
 
-@override_settings( ROOT_URLCONF='chibi_user.urls' )
 class Test_views( TestCase ):
     model = Token
     path = '/token/'
@@ -47,7 +48,13 @@ class Test_views( TestCase ):
 
     def test_create_user( self ):
         auth = str( self.super_token )
-        response = self.client.post( '/users/', HTTP_AUTHORIZATION=auth )
+        response = self.client.post(
+            '/users/', HTTP_AUTHORIZATION=auth,
+            data={
+                'first_name': fake.first_name(),
+                'last_name': fake.last_name(), 'email': fake.email(),
+                'username': fake.user_name(),
+            } )
 
         self.assertEqual( response.status_code, status.HTTP_201_CREATED,
                           ( "the status code should be 200 instead "
@@ -65,7 +72,7 @@ class Test_views( TestCase ):
     def test_delete_user( self ):
         data = self.test_create_user()
         auth = str( self.super_token )
-        url = reverse( 'users-detail', kwargs={ 'pk': data[ 'pk' ] } )
+        url = reverse( 'users:users-detail', kwargs={ 'pk': data[ 'pk' ] } )
         response = self.client.delete( url, HTTP_AUTHORIZATION=auth )
 
         self.assertEqual( response.status_code, status.HTTP_204_NO_CONTENT )
@@ -73,7 +80,8 @@ class Test_views( TestCase ):
     def test_refresh_token( self ):
         data = self.test_create_user()
         auth = str( self.super_token )
-        url = reverse( 'users-refresh-token', kwargs={ 'pk': data[ 'pk' ] } )
+        url = reverse(
+            'users:users-refresh-token', kwargs={ 'pk': data[ 'pk' ] } )
         response = self.client.post( url, HTTP_AUTHORIZATION=auth )
 
         self.assertEqual( response.status_code, status.HTTP_200_OK )

@@ -78,3 +78,11 @@ class parametrise_hyperlink_identity_field(
                     ).format( field )
                     raise Impossible_build_url( msg )
                 kargs[ lookup ] = value
+
+    def to_internal_value( self, *args, **kw ):
+        result = super().to_internal_value( *args, **kw )
+        return result
+
+    def to_representation( self, *args, **kw ):
+        result = super().to_representation( *args, **kw )
+        return str( result )
