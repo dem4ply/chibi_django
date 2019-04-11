@@ -87,4 +87,9 @@ def generic_exception_handler( exc, context ):
         response = Response( exc.context, status=exc.status_code )
         set_rollback()
 
+    if response is None and exc:
+        response = Response(
+            { "detail": "Unhandled error." },
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR )
+
     return response

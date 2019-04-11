@@ -4,7 +4,7 @@ from chibi_django.exceptions import Http_not_found, Http_internal_server_error
 from rest_framework.renderers import JSONRenderer
 
 
-def page_not_found(request, template_name='404.html'):
+def page_not_found(request, exception, template_name='404.html'):
     """
     404 error handler.
     Templates: :template:`404.html`
