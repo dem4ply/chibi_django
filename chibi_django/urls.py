@@ -10,10 +10,6 @@ urlpatterns = [
         r'^', include(
             ( 'django.contrib.auth.urls', 'django_contrib' ),
             namespace='auth' ) ),
-    path(
-        r'^', include(
-            ( 'social_django.urls', 'social_django' ),
-            namespace='social' ) ),
     path( 'admin/', admin.site.urls ),
     path( r'', include( ( users_urls, 'users' ), namespace='users' ), ),
 ]

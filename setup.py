@@ -8,7 +8,7 @@ except:
 
 setup(
     name='chibi_django',
-    version='0.1.2',
+    version='0.2.0',
     description='',
     # long_description=README,
     license='',
@@ -19,7 +19,6 @@ setup(
         'Django>=2.0.7', 'django-filter>=2.0.7',
         'djangorestframework>=3.8.2',
         'django-filters>=0.2.1', 'drf-nested-routers>=0.90.2',
-        'social-auth-app-django>=2.1.0',
     ],
     dependency_links = [],
     classifiers=[

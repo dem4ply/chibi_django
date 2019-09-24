@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'rest_framework',
-    'social_django',
     'corsheaders',
     'chibi_django',
     'chibi_user',
