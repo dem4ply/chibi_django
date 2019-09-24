@@ -23,6 +23,7 @@ class Action_serializer( serializers.ModelSerializer ):
 
 
 class Mock_View( Model_viewset ):
+    authentication_classes = []
     permission_classes = ( AllowAny, )
     queryset = Action.objects.all()
     serializer_class = Action_serializer

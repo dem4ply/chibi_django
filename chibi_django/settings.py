@@ -135,7 +135,7 @@ STATIC_URL = '/static/'
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'chibi_user.authentication.Token_simple_authentication'
+        'chibi_user.authentication.Token_simple_authentication',
         # 'rest_framework.authentication.BasicAuthentication',
         # 'rest_framework.authentication.SessionAuthentication',
     ],
