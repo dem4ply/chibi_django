@@ -1,15 +1,15 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
-from django.utils.translation import ugettext_lazy as _
+# from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from .token import Token
 from chibi_user.managers import User_manager
+from chibi_django.models import Chibi_model
 
 
-class User( AbstractBaseUser, PermissionsMixin ):
+class User( AbstractBaseUser, PermissionsMixin, Chibi_model ):
     """
     Modelo de usuarios para personalisar los campos
     """
-    id = models.CharField( _( "Id of user" ), max_length=64, primary_key=True )
     username = models.CharField( unique=True, max_length=64, )
     email = models.CharField(
         unique=True, null=True, default=None, max_length=64, )

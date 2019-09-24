@@ -1,9 +1,8 @@
 from django.contrib.auth.models import BaseUserManager
 from chibi import madness
-from chibi_django.managers import Base_64_pk
 
 
-class User_manager( Base_64_pk, BaseUserManager ):
+class User_manager( BaseUserManager ):
 
     def create( self, *args, password='', **kw ):
         user = super().create( *args, password=password, **kw )

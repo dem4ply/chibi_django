@@ -3,7 +3,10 @@ from rest_framework.response import Response
 from rest_framework.test import APIRequestFactory
 from rest_framework_nested import routers
 
-from chibi_user.models import User as User_model, Token as Token_model
+try:
+    from chibi_user.models import User as User_model, Token as Token_model
+except Exception:
+    pass
 
 
 factory = APIRequestFactory()
