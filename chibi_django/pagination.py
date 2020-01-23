@@ -43,7 +43,7 @@ class Link_header_pagination( pagination.PageNumberPagination ):
     def create_header( self, link ):
         result = {
             self.page_total_count_header: self._data_count,
-            self.page_count_header: min( self._page_size, len( self._data ) ),
+            self.page_count_header: min( self._page_size, len( self.data ) ),
             self.current_page_header: self._page_number + 1,
             self.size_page_header: self._page_size
         }
@@ -84,7 +84,11 @@ class Link_header_pagination( pagination.PageNumberPagination ):
         try:
             self._data_count = self.page.paginator.count
         except:
-            self._data_count = len( self._data )
+            self._data_count = len( self.data )
+
+    @property
+    def data( self ):
+        return self._data
 
 
 class Paginate_search_es( Link_header_pagination ):
@@ -92,16 +96,11 @@ class Paginate_search_es( Link_header_pagination ):
         return math.ceil( data.count() / self._page_size )
 
     def create_response( self, data, headers ):
-        start = self._page_size * ( self._page_number - 1  )
-        if start < 0:
-            start = 0
-        end = start + self._page_size
         if self._serializer is not None:
-            serializer = self._serializer( self._data[ start:end ].execute(),
-                                           many=True )
+            serializer = self._serializer( self.data, many=True )
             return Response( serializer.data, headers=headers )
         else:
-            data = data[ start:end ].execute()
+            data = self.data
             result_data = []
             for d in data:
                 result_data.append( d.to_dict() )
@@ -126,3 +125,15 @@ class Paginate_search_es( Link_header_pagination ):
         url = self.request.build_absolute_uri()
         page_number = self._page_number - 1
         return replace_query_param( url, self.page_query_param, page_number )
+
+    @property
+    def data( self ):
+        try:
+            return self.__data
+        except AttributeError:
+            start = self._page_size * ( self._page_number - 1  )
+            if start < 0:
+                start = 0
+            end = start + self._page_size
+            self.__data = self._data[ start:end ].execute()
+            return self.__data
