@@ -31,20 +31,20 @@ class List_model:
 
         page = self.paginate_queryset( queryset )
         if page is not None:
-            serializer = self.get_serializer( page, many=True,
-                                              serializer_name='list' )
+            serializer = self.get_serializer(
+                page, many=True, serializer_name='list' )
             return self.get_paginated_response( serializer.data )
 
-        serializer = self.get_serializer( queryset, many=True,
-                                          serializer_name='list' )
+        serializer = self.get_serializer(
+            queryset, many=True, serializer_name='list' )
         return Response( serializer.data )
 
 
 class Retrieve_model:
     def retrieve( self, request, *args, **kw ):
         instance = self.get_object()
-        serializer = self.get_serializer( instance,
-                                          serializer_name='retrieve' )
+        serializer = self.get_serializer(
+            instance, serializer_name='retrieve' )
         return Response( serializer.data )
 
 

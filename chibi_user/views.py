@@ -4,7 +4,7 @@ from .serializers import (
     User_create as User_create_serializer
 )
 from .authentication import Token_simple_authentication
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import action
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from chibi_django import view_set
@@ -51,7 +51,7 @@ class User( view_set.Model_viewset ):
         'create': User_create_serializer,
     }
 
-    @detail_route( methods=[ 'POST' ] )
+    @action( detail=True, methods=[ 'POST' ] )
     def refresh_token( self, request, pk, format=None ):
         user = User_model.objects.get( pk=pk )
         token = user.refresh_token()

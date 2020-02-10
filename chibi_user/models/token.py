@@ -1,12 +1,10 @@
 from django.conf import settings
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 from chibi import madness
 
-AUTH_USER_MODEL = getattr( settings, 'AUTH_USER_MODEL', 'mad_users.User' )
+AUTH_USER_MODEL = getattr( settings, 'AUTH_USER_MODEL', 'chibi_user.User' )
 
 
-@python_2_unicode_compatible
 class Token( models.Model ):
     user = models.OneToOneField(
         AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='token', )

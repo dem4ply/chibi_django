@@ -19,8 +19,8 @@ class Multi_serializer_viewset( viewsets.GenericViewSet ):
             try:
                 serializer_class = serializers[ 'default' ]
             except KeyError:
-                raise KeyError(
-                    _( 'The serializer %s is not defined' ) % serializer_name )
+                raise KeyError( _(
+                    'The serializer %s is not defined' ) % serializer_name )
         return serializer_class
 
 

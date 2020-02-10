@@ -30,7 +30,7 @@ class Mock_View( Model_viewset ):
 
 
 router = routers.SimpleRouter()
-router.register( r'', Mock_View, base_name='mock' )
+router.register( r'', Mock_View, basename='mock' )
 
 urlpatterns = router.urls
 
