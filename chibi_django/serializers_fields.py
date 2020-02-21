@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from rest_framework.reverse import reverse
+from marshmallow import fields
 
 
 class Impossible_build_url( Exception ):
@@ -86,3 +87,13 @@ class parametrise_hyperlink_identity_field(
     def to_representation( self, *args, **kw ):
         result = super().to_representation( *args, **kw )
         return str( result )
+
+    def serialize( self, *args, **kw ):
+        import pdb
+        pdb.set_trace()
+        return self.to_internal_value( self, *args, **kw )
+        return super().serialize( *args, **kw  )
+
+    def deserialize( self, *args, **kw ):
+        return self.to_representation( self, *args, **kw )
+        return super().deserialize( *args, **kw  )

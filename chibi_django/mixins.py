@@ -77,3 +77,34 @@ class Destroy_model:
 
     def perform_destroy( self, instance ):
         instance.delete()
+
+
+class Elastic_list_model:
+    def list( self, request, *args, **kw ):
+        queryset = self.filter_queryset( self.get_queryset() )
+        serializer = self.get_serializer_class( 'list' )
+
+        page = self.pagination_class()
+        return page.get_paginated_response(
+            queryset, request, serializer=serializer )
+
+class Elastic_retrieve_model:
+    def retrieve( self, request, *args, **kw ):
+        instance = self.get_object()
+        serializer = self.get_serializer(
+            instance, serializer_name='retrieve' )
+        return Response( serializer.data )
+
+
+class Elastic_create_model( Location_header ):
+    def create( self, request, *args, **kw ):
+        serializer = self.get_serializer(
+            data=self.create_build_data( request.data ),
+            serializer_name='create' )
+        serializer.is_valid( raise_exception=True )
+        self.perform_create( serializer )
+        headers = self.get_success_headers( serializer.data )
+        return Response( status=status.HTTP_201_CREATED, headers=headers )
+
+    def perform_create( self, serializer ):
+        serializer.save()

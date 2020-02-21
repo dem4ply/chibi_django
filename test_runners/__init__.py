@@ -10,6 +10,9 @@ from django.test.runner import DiscoverRunner
 
 
 class CustomizedRunner( DiscoverRunner ):
+    def __init__( self, *args, **kw ):
+        super().__init__( *args, **kw )
+
     def build_suite(self, *args, **kwargs):
         suite = super().build_suite( *args, **kwargs )
         filtered = TestSuite()
@@ -21,6 +24,7 @@ class CustomizedRunner( DiscoverRunner ):
         return filtered
 
     def setup_test_environment( self, **kargs ):
+        settings.TEST_MODE = True
         super().setup_test_environment( **kargs )
         settings.CELERY_ALWAYS_EAGER = True
         settings.CELERY_EAGER_PROPAGATES_EXCEPTIONS = True  # Issue #75

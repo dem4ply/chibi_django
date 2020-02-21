@@ -70,7 +70,7 @@ class Mock_view_all_404( viewsets.ViewSet ):
 
 
 router = routers.SimpleRouter()
-router.register( r'token', Mock_View_authenticated, base_name='token' )
-router.register( r'fail_soft', Mock_view_all_404, base_name='fail_soft' )
+router.register( r'token', Mock_View_authenticated, basename='token' )
+router.register( r'fail_soft', Mock_view_all_404, basename='fail_soft' )
 
 urlpatterns = router.urls

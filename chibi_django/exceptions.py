@@ -1,7 +1,11 @@
+import logging
 from rest_framework import status
 from rest_framework.views import set_rollback
 from rest_framework.response import Response
 from rest_framework.views import exception_handler
+
+
+logger = logging.getLogger( 'chibi_django.exceptions' )
 
 
 class Http_error( Exception ):
@@ -91,5 +95,5 @@ def generic_exception_handler( exc, context ):
         response = Response(
             { "detail": "Unhandled error." },
             status=status.HTTP_500_INTERNAL_SERVER_ERROR )
-
+        logger.exception( "unhandled error", exc_info=exc )
     return response

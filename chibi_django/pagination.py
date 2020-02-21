@@ -53,7 +53,8 @@ class Link_header_pagination( pagination.PageNumberPagination ):
 
     def create_response( self, data, headers ):
         if self._serializer is not None:
-            serializer = self._serializer( data, many=True )
+            serializer = self._serializer(
+                data, many=True, context={ 'request': self.request } )
             return Response( serializer.data, headers=headers )
         else:
             return Response( data, headers=headers )
@@ -97,7 +98,8 @@ class Paginate_search_es( Link_header_pagination ):
 
     def create_response( self, data, headers ):
         if self._serializer is not None:
-            serializer = self._serializer( self.data, many=True )
+            serializer = self._serializer(
+                self.data, many=True, context={ 'request': self.request } )
             return Response( serializer.data, headers=headers )
         else:
             data = self.data
