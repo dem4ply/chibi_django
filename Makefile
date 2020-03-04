@@ -34,10 +34,34 @@ report_html: test
 	@coverage html -d .html_coverage
 	@nohup firefox .html_coverage/index.html > /dev/null &
 
-clean:
-	@echo "Running clean..."
-	@find . -name ".*.sw*" -exec rm {} +
-	@rm -r .coverage .html_coverage
+clean: clean-build clean-pyc clean-test ## remove all build, test, coverage and Python artifacts
+
+clean-build: ## remove build artifacts
+	rm -fr build/
+	rm -fr dist/
+	rm -fr .eggs/
+	find . -name '*.egg-info' -exec rm -fr {} +
+	find . -name '*.egg' -exec rm -f {} +
+
+clean-pyc: ## remove Python file artifacts
+	find . -name '*.pyc' -exec rm -f {} +
+	find . -name '*.pyo' -exec rm -f {} +
+	find . -name '*~' -exec rm -f {} +
+	find . -name '__pycache__' -exec rm -fr {} +
+
+clean-test: ## remove test and coverage artifacts
+	rm -fr .tox/
+	rm -f .coverage
+	rm -fr coverage_html_report/
+	rm -fr .pytest_cache
+
+dist: clean ## builds source and wheel package
+	python setup.py sdist
+	python setup.py bdist_wheel
+	ls -l dist
+
+release: dist ## package and upload a release
+	twine upload dist/*
 
 pep8:
 	@echo "Running pep8 tests..."

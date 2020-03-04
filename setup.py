@@ -8,18 +8,21 @@ except:
 
 setup(
     name='chibi_django',
-    version='0.2.1',
+    version='0.2.2',
     description='',
     # long_description=README,
     license='',
     author='',
     author_email='',
-    packages=find_packages(),
+    packages=find_packages(include=[
+        'chibi_django', 'chibi_django.*',
+        'chibi_user', 'chibi_user.*',
+        'test_runners', 'test_runners.*' ] ),
     install_requires=[
         'Django>=2.0.7', 'django-filter>=2.0.7',
         'djangorestframework>=3.8.2',
         'django-filters>=0.2.1', 'drf-nested-routers>=0.90.2',
-        'chibi>=0.5.3',
+        'chibi>=0.7.7', 'chibi_donkey==1.0.0'
     ],
     dependency_links = [],
     url='https://github.com/dem4ply/chibi_django',
