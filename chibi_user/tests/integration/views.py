@@ -1,3 +1,4 @@
+from unittest import TestCase
 from rest_framework import status
 from rest_framework.reverse import reverse
 from rest_framework.test import APIClient
@@ -5,6 +6,8 @@ from rest_framework.test import APIClient
 from chibi_user.models import Token
 from chibi_user.tests import get_user_test, get_superuser_test
 from test_runners.snippet.response import get_location, assert_status_code
+
+from faker import Factory as Faker_factory
 
 
 fake = Faker_factory.create()

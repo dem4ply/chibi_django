@@ -1,9 +1,11 @@
 from django.test import TestCase
 from chibi_user.factories import User as User_factory
-from chibi_user.models import (
-    Token as Token_model,
-    User as User_model,
-)
+from chibi_user.models import Token as Token_model
+
+from django.contrib.auth import get_user_model
+
+
+User_model = get_user_model()
 
 
 class Test_users( TestCase ):

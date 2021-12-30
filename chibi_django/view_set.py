@@ -24,11 +24,14 @@ def get_object_or_404( queryset, *filter_args, **filter_kwargs ):
     except ( TypeError, ValueError, ValidationError, NotFoundError ):
         raise Http404
 
+
 class Multi_permission_viewset( viewsets.GenericViewSet ):
     def get_permissions(self):
         """
         Instantiates and returns the list of permissions that this view requires.
         """
+        if self.action is None:
+            return [permission() for permission in self.permission_classes]
         func = getattr( self, self.action )
         if hasattr( func, 'permission_classes' ):
             return [ permission() for permission in func.permission_classes ]
@@ -95,10 +98,15 @@ class Model_viewset(
 
 class Elastic_model_viewset(
         mixins.Elastic_list_model, mixins.Elastic_retrieve_model,
-    mixins.Elastic_create_model, Elastic_view_set ):
+        mixins.Elastic_create_model, Elastic_view_set ):
     pass
 
 
 class Read_only_model_viewset(
         mixins.Retrieve_model, mixins.List_model, Nested_view_set ):
+    pass
+
+
+class List_only_model_viewset(
+        mixins.List_model, Nested_view_set ):
     pass

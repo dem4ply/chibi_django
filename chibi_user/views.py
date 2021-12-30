@@ -1,4 +1,4 @@
-from .models import User as User_model, Token as Token_model
+from .models import Token as Token_model
 from .serializers import (
     User as User_serializer, Token as Token_serializer,
     User_create as User_create_serializer
@@ -10,6 +10,11 @@ from rest_framework.response import Response
 from chibi_django import view_set
 from rest_framework import filters
 from django.shortcuts import render
+from django.conf import settings
+
+
+from django.contrib.auth import get_user_model
+User_model = get_user_model()
 
 
 from django.contrib.auth.decorators import login_required

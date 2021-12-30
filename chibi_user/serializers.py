@@ -1,8 +1,11 @@
 from rest_framework import serializers
-from chibi_user.models import Token as Token_model, User as User_model
+from chibi_user.models import Token as Token_model
 from chibi_django.serializers_fields import (
     parametrise_hyperlink_identity_field
 )
+
+from django.contrib.auth import get_user_model
+User_model = get_user_model()
 
 
 class Token( serializers.ModelSerializer ):

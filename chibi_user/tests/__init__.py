@@ -4,15 +4,20 @@ from rest_framework.test import APIRequestFactory
 from rest_framework_nested import routers
 
 try:
-    from chibi_user.models import User as User_model, Token as Token_model
+    from chibi_user.models import Token as Token_model
 except Exception:
     pass
+
+from django.contrib.auth import get_user_model
+
+
 
 
 factory = APIRequestFactory()
 
 
 def get_superuser_test():
+    User_model = get_user_model()
     try:
         user = User_model.objects.filter( is_staff=True )[0]
     except:
@@ -25,6 +30,7 @@ def get_superuser_test():
 
 
 def get_user_test( pk=None ):
+    User_model = get_user_model()
     try:
         user = User_model.objects.filter( is_staff=False )[0]
     except:

@@ -1,5 +1,4 @@
 from django.test import TestCase, override_settings
-from django.utils import six
 from rest_framework import status
 from rest_framework.test import APIClient
 
@@ -106,4 +105,4 @@ class TokenAuthTests( BaseTokenAuthTests, TestCase ):
         """Ensure generate_key returns a string"""
         token = self.model()
         key = token.generate_key()
-        self.assertIsInstance( key, six.string_types )
+        self.assertIsInstance( key, str )

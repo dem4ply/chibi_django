@@ -1,14 +1,14 @@
-import jwt
+import json
 import uuid
 import warnings
-
-from django.contrib.auth import get_user_model
-
 from calendar import timegm
 from datetime import datetime
 
-from rest_framework_jwt.compat import get_username
-from rest_framework_jwt.compat import get_username_field
+import jwt
+from chibi_auth0 import Chibi_auth0
+from django.conf import settings
+from django.contrib.auth import get_user_model, authenticate
+from rest_framework_jwt.compat import get_username, get_username_field
 from rest_framework_jwt.settings import api_settings
 
 
@@ -131,3 +131,35 @@ def response_payload_handler( token, user=None, request=None ):
     return {
         'token': token
     }
+
+
+def jwt_get_username_from_payload_handler( payload ):
+    username = payload.get( 'sub' )
+    authenticate( remote_user=username )
+    return username
+
+
+def jwt_decode_token(token):
+    header = jwt.get_unverified_header(token)
+    auth0 = Chibi_auth0(
+        domain=settings.JWT_AUTH.JWT_CLIENT_DOMAIN,
+        client_id=settings.JWT_AUTH.JWT_CLIENT_ID,
+        client_secret=settings.JWT_AUTH.JWT_CLIENT_SECRET,
+        audience=settings.JWT_AUTH.JWT_AUDIENCE,
+    )
+    jwks = auth0.well_know
+    public_key = None
+    for jwk in jwks[ 'keys' ]:
+        if jwk[ 'kid' ] == header[ 'kid' ]:
+            public_key = jwt.algorithms.RSAAlgorithm.from_jwk(
+                json.dumps( jwk ) )
+
+    if public_key is None:
+        raise Exception( 'Public key not found.' )
+
+    return jwt.decode(
+        token, public_key,
+        audience=settings.JWT_AUTH.JWT_AUDIENCE,
+        issuer=settings.JWT_AUTH.JWT_ISSUER,
+        algorithms=[ 'RS256' ] )
+

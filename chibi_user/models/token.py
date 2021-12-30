@@ -2,7 +2,7 @@ from django.conf import settings
 from django.db import models
 from chibi import madness
 
-AUTH_USER_MODEL = getattr( settings, 'AUTH_USER_MODEL', 'chibi_user.User' )
+AUTH_USER_MODEL = getattr( settings, 'AUTH_USER_MODEL' )
 
 
 class Token( models.Model ):

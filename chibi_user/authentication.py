@@ -1,15 +1,20 @@
 from __future__ import unicode_literals
 
+import jwt
+from chibi_auth0 import Chibi_auth0
+from chibi_user.models import Token
+from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import exceptions
 from rest_framework.authentication import (
     get_authorization_header, BaseAuthentication
 )
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from rest_framework_jwt.settings import api_settings
 
-from chibi_user.models import Token
 
-
-__all__ = [ 'Token_simple_authentication' ]
+__all__ = [ 'Token_simple_authentication', 'JWT_authentication' ]
 
 
 class Token_simple_authentication( BaseAuthentication ):
@@ -72,12 +77,8 @@ class Token_simple_authentication( BaseAuthentication ):
         return 'token' if prefix == 'token' else None
 
 
-'''
-import jwt
-from rest_framework_jwt.settings import api_settings
-from django.contrib.auth import get_user_model
-from django.utils.encoding import smart_text
-from rest_framework_jwt.authentication import BaseJSONWebTokenAuthentication
+#from rest_framework_jwt.authentication import BaseJSONWebTokenAuthentication
+
 
 jwt_decode_handler = api_settings.JWT_DECODE_HANDLER
 jwt_get_username_from_payload = api_settings.JWT_PAYLOAD_GET_USERNAME_HANDLER
@@ -160,7 +161,25 @@ class Base_JWT_authentication( BaseAuthentication ):
         return auth[1], auth_settings
 
 
-class JSONWebTokenAuthentication( BaseJSONWebTokenAuthentication ):
+class JWT_authentication( JSONWebTokenAuthentication ):
+    def authenticate( self, request ):
+        user_token = super().authenticate( request )
+        if not user_token:
+            return None
+        user, token = user_token
+        auth0 = Chibi_auth0(
+            domain=settings.JWT_AUTH.JWT_CLIENT_DOMAIN,
+            client_id=settings.JWT_AUTH.JWT_CLIENT_ID,
+            client_secret=settings.JWT_AUTH.JWT_CLIENT_SECRET,
+            audience=settings.JWT_AUTH.JWT_AUDIENCE,
+        )
+        user_info = auth0.user_info( user_id=user.username )
+        user.email = user_info.email
+        user.save()
+        return user, token
+
+'''
+class JWT_authentication( JSONWebTokenAuthentication ):
     """
     Clients should authenticate by passing the token key in the "Authorization"
     HTTP header, prepended with the string specified in the setting
