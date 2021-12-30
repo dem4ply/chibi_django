@@ -48,6 +48,11 @@ def assert_has_pages( response ):
         response.has_header( 'link' ), 'should have links for the pages' )
 
 
+def assert_has_location( response ):
+    tc.assertTrue(
+        response.has_header( 'location' ), 'should have location' )
+
+
 def assert_has_next_page( response ):
     links = get_link_header( response )
     tc.assertIn(
@@ -58,6 +63,13 @@ def assert_has_next_page( response ):
 def assert_has_prev_page( response ):
     links = get_link_header( response )
     tc.assertIn(
+        'prev', links,
+        "\nEl header link no tiene anterior pagina\n{}".format( links ) )
+
+
+def assert_not_has_prev_page( response ):
+    links = get_link_header( response )
+    tc.assertNotIn(
         'prev', links,
         "\nEl header link no tiene anterior pagina\n{}".format( links ) )
 
