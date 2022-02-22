@@ -6,16 +6,24 @@ from django.db import models
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
+from MySQLdb._exceptions import OperationalError
 
 
 logger = logging.getLogger( 'chibi_django.models' )
 
 
 class Chibi_model( models.Model ):
-    id = models.CharField( _( "Id" ), max_length=64, primary_key=True )
+    id = models.CharField( _( "Id" ), max_length=16, primary_key=True )
 
     class Meta:
         abstract = True
+
+
+def build_fake_pk( model, size=None ):
+        if not size:
+            max_length = model._meta.get_field( 'id' ).max_length
+            size = max_length // 2
+        return madness.string.generate_token_b64( length=size )
 
 
 @receiver( pre_save )
@@ -28,16 +36,18 @@ def chibi_model_create_pk( sender, instance, **kw ):
         count_retry = 0
         while True:
             try_pk = madness.string.generate_token_b64( length=start )
-            is_pk_exists = sender.objects.filter( pk=try_pk ).count()
-            if is_pk_exists == 0:
+            is_pk_exists = sender.objects.filter( pk=try_pk ).exists()
+            if not is_pk_exists:
                 break
-            logger.warinig(
-                "colicion de pks",
+            logger.warning(
+                "colicionarion coliciono el pk, incrementa "
+                "la longitud de inicio",
                 extra={
                     'number_pk_collide': 1, 'pk_collide': [ try_pk ],
                     'length_of_pk': start, 'count_of_retry': count_retry,
                     'max_length_pk': max_length,
-                    'current_length': len( try_pk )
+                    'current_length': len( try_pk ),
+                    'model': str( type( sender ) )
                 } )
             if count_retry >= max_retry:
                 start += 1

@@ -1,12 +1,9 @@
-from django.contrib.contenttypes.models import ContentType
-from django.db import models
-from django.utils.translation import gettext_lazy as _
-
 from chibi_django.models import Chibi_model
 from chibi_user.managers import Permission_manager
+from chibi_user.user_base import Permission_base
 
 
-class Permission( Chibi_model ):
+class Permission( Permission_base, Chibi_model ):
     """
     The permissions system provides a way to assign permissions to specific
     users and groups of users.
@@ -29,27 +26,7 @@ class Permission( Chibi_model ):
 
     The permissions listed above are automatically created for each model.
     """
-    name = models.CharField( _( 'name' ), max_length=255 )
-    content_type = models.ForeignKey(
-        ContentType,
-        models.CASCADE,
-        related_name='+',
-        verbose_name=_( 'content type' ),
-    )
-    codename = models.CharField( _( 'codename' ), max_length=100 )
-
     objects = Permission_manager()
 
-    class Meta:
-        verbose_name = _( 'permission' )
-        verbose_name_plural = _( 'permissions' )
-        unique_together = ( ('content_type', 'codename' ),)
-        ordering = (
-            'content_type__app_label', 'content_type__model', 'codename' )
-
-    def __str__( self ):
-        return f'{self.content_type} | {self.name}'
-
-    def natural_key( self ):
-        return ( self.codename, ) + self.content_type.natural_key()
-    natural_key.dependencies = [ 'contenttypes.contenttype' ]
+    class Meta( Permission_base.Meta ):
+        swappable = 'AUTH_PERMISSION_MODEL'

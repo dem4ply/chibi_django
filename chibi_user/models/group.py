@@ -1,11 +1,9 @@
-from django.db import models
-from django.utils.translation import gettext_lazy as _
 from chibi_django.models import Chibi_model
-from .permission import Permission
 from chibi_user.managers import Group_manager
+from chibi_user.user_base import Group_base
 
 
-class Group( Chibi_model ):
+class Group( Group_base, Chibi_model ):
     """
     Groups are a generic way of categorizing users to apply permissions, or
     some other label, to those users. A user can belong to any number of
@@ -22,22 +20,7 @@ class Group( Chibi_model ):
     members-only portion of your site, or sending them members-only email
     messages.
     """
-    name = models.CharField( _( 'name' ), max_length=128, unique=True )
-    permissions = models.ManyToManyField(
-        Permission,
-        verbose_name=_( 'permissions' ),
-        blank=True,
-    )
-
     objects = Group_manager()
 
-    class Meta:
-        verbose_name = _( 'group' )
-        verbose_name_plural = _( 'groups' )
-
-    def __str__( self ):
-        return self.name
-
-    def natural_key( self ):
-        return ( self.name,)
-
+    class Meta( Group_base.Meta ):
+        swappable = 'AUTH_GROUP_MODEL'

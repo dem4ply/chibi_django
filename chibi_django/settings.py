@@ -125,6 +125,8 @@ USE_L10N = True
 USE_TZ = True
 
 AUTH_USER_MODEL = 'chibi_user.User'
+AUTH_GROUP_MODEL = 'chibi_user.Group'
+AUTH_PERMISSION_MODEL = 'chibi_user.Permission'
 
 
 # Static files (CSS, JavaScript, Images)

@@ -4,15 +4,59 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from chibi_django.models import Chibi_model
 from chibi_user.managers import User_manager
 from chibi_user.models.mixin import Permissions_mixin
+from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
 
 
-# from django.utils.translation import ugettext_lazy as _
+class Group_base( models.Model ):
+    name = models.CharField( _( 'name' ), max_length=128, unique=True )
+    permissions = models.ManyToManyField(
+        settings.AUTH_PERMISSION_MODEL,
+        verbose_name=_( 'permissions' ),
+        blank=True,
+    )
+
+    class Meta:
+        abstract = True
+        verbose_name = _( 'group' )
+        verbose_name_plural = _( 'groups' )
+
+    def __str__( self ):
+        return self.name
+
+    def natural_key( self ):
+        return ( self.name,)
 
 
-class User_base( AbstractBaseUser, Permissions_mixin, Chibi_model ):
+class Permission_base( models.Model ):
+    name = models.CharField( _( 'name' ), max_length=255 )
+    content_type = models.ForeignKey(
+        ContentType,
+        models.CASCADE,
+        related_name='+',
+        verbose_name=_( 'content type' ),
+    )
+    codename = models.CharField( _( 'codename' ), max_length=100 )
+
+    class Meta:
+        abstract = True
+        verbose_name = _( 'permission' )
+        verbose_name_plural = _( 'permissions' )
+        unique_together = ( ('content_type', 'codename' ),)
+        ordering = (
+            'content_type__app_label', 'content_type__model', 'codename' )
+
+    def __str__( self ):
+        return f'{self.content_type} | {self.name}'
+
+    def natural_key( self ):
+        return ( self.codename, ) + self.content_type.natural_key()
+    natural_key.dependencies = [ 'contenttypes.contenttype' ]
+
+
+class User_base( AbstractBaseUser, Permissions_mixin ):
     """
     Modelo de usuarios para personalisar los campos
     """

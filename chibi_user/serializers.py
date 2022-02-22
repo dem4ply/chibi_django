@@ -32,7 +32,7 @@ class User_create( serializers.ModelSerializer ):
         model = User_model
         fields = [
             'pk', 'url', 'first_name', 'last_name', 'username', 'is_staff',
-            'is_superuser', 'is_active' ]
+            'email', 'is_superuser', 'is_active' ]
         read_only_fields = [ 'pk', 'url' ]
 
     def create( self, validate_data ):

@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Permission',
             fields=[
-                ('id', models.CharField(max_length=64, primary_key=True, serialize=False, verbose_name='Id')),
+                ('id', models.CharField(max_length=16, primary_key=True, serialize=False, verbose_name='Id')),
                 ('name', models.CharField(max_length=255, verbose_name='name')),
                 ('codename', models.CharField(max_length=100, verbose_name='codename')),
                 ('content_type', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='+', to='contenttypes.ContentType', verbose_name='content type')),
@@ -34,7 +34,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Group',
             fields=[
-                ('id', models.CharField(max_length=64, primary_key=True, serialize=False, verbose_name='Id')),
+                ('id', models.CharField(max_length=16, primary_key=True, serialize=False, verbose_name='Id')),
                 ('name', models.CharField(max_length=128, unique=True, verbose_name='name')),
                 ('permissions', models.ManyToManyField(blank=True, to='chibi_user.Permission', verbose_name='permissions')),
             ],
