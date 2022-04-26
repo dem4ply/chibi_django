@@ -19,6 +19,8 @@ class CustomizedRunner( DiscoverRunner ):
 
         for test in suite:
             testname = str( test )
+            if 'unittest.loader._FailedTest' in testname.lower():
+                print( testname )
             if '.tests.' in testname and self.package in testname:
                 filtered.addTest( test )
         return filtered

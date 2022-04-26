@@ -1,6 +1,7 @@
 from rest_framework.test import APITestCase
 from rest_framework.reverse import reverse
 from .snippet.response import get_location
+from chibi_user.tests import get_superuser_test, get_user_test
 from django.db import models
 
 
@@ -31,10 +32,39 @@ class API_test_case( APITestCase ):
         url = self.reverse( 'detail' )
         return url
 
-    def detail_of( self, pk ):
+    def list_of( self, pk, lookup='pk' ):
         if isinstance( pk, models.Model ):
             pk = pk.pk
-        return self.reverse( 'detail', kwargs={ 'pk': pk } )
+        return self.reverse( 'list', kwargs={ lookup: pk } )
+
+    def detail_of( self, pk, lookup='pk', kwargs=None ):
+        if isinstance( pk, models.Model ):
+            pk = pk.pk
+        if kwargs is None:
+            kwargs = { lookup: pk }
+        else:
+            kwargs[ lookup ] = pk
+        return self.reverse( 'detail', kwargs=kwargs )
 
     def get_location( self, response ):
         return get_location( response, client=self.client )
+
+
+class Test_token_user( API_test_case ):
+
+    def setUp( self ):
+        super().setUp()
+        self.password = 'password'
+        self.client = self.client_class( enforce_csrf_checks=True )
+        self.user, self.token = get_user_test()
+        self.client.credentials( HTTP_AUTHORIZATION=str( self.token ) )
+
+
+class Test_token_superuser( API_test_case ):
+
+    def setUp( self ):
+        super().setUp()
+        self.password = 'password'
+        self.client = self.client_class( enforce_csrf_checks=True )
+        self.user, self.token = get_superuser_test()
+        self.client.credentials( HTTP_AUTHORIZATION=str( self.token ) )
