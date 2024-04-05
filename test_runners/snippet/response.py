@@ -6,6 +6,7 @@ from chibi.snippet.string import decode
 from pprint import pformat
 from chibi.parser import link_header
 from chibi.fancy.is_type import is_iter
+from django.http import FileResponse
 import json
 
 
@@ -78,8 +79,11 @@ def assert_status_code( response, status_ok, print_headers=False ):
     try:
         response_data = response.data
     except AttributeError:
-        response_data = madness.string.decode( response.content )
-        response_data = json.loads( response_data )
+        if isinstance( response, FileResponse ):
+            response_data = "streaming_data"
+        else:
+            response_data = madness.string.decode( response.content )
+            response_data = json.loads( response_data )
     if print_headers:
         msg = ( "\nthe status code should be '{}' but is '{}'\n"
                 "url: {}\n"

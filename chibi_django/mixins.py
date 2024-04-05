@@ -88,6 +88,7 @@ class Elastic_list_model:
         return page.get_paginated_response(
             queryset, request, serializer=serializer )
 
+
 class Elastic_retrieve_model:
     def retrieve( self, request, *args, **kw ):
         instance = self.get_object()

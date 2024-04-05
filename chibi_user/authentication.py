@@ -5,13 +5,13 @@ from chibi_auth0 import Chibi_auth0
 from chibi_user.models import Token
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from rest_framework import exceptions
 from rest_framework.authentication import (
     get_authorization_header, BaseAuthentication
 )
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-from rest_framework_jwt.settings import api_settings
+from rest_framework_simplejwt.settings import api_settings
+from rest_framework_simplejwt.authentication import JWTAuthentication as JSONWebTokenAuthentication
 
 
 __all__ = [ 'Token_simple_authentication', 'JWT_authentication' ]
@@ -80,8 +80,8 @@ class Token_simple_authentication( BaseAuthentication ):
 #from rest_framework_jwt.authentication import BaseJSONWebTokenAuthentication
 
 
-jwt_decode_handler = api_settings.JWT_DECODE_HANDLER
-jwt_get_username_from_payload = api_settings.JWT_PAYLOAD_GET_USERNAME_HANDLER
+#jwt_decode_handler = api_settings.JWT_DECODE_HANDLER
+#jwt_get_username_from_payload = api_settings.JWT_PAYLOAD_GET_USERNAME_HANDLER
 
 
 class Base_JWT_authentication( BaseAuthentication ):

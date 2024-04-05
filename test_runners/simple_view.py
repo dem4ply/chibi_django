@@ -49,6 +49,13 @@ class API_test_case( APITestCase ):
     def get_location( self, response ):
         return get_location( response, client=self.client )
 
+    def get_list( self, *args, **kw ):
+        return self.client.get( self.list, *args, **kw )
+
+    def get_detail_of( self, pk, lookup='pk', kwargs=None ):
+        url = self.detail_of( pk, lookup=lookup, kwargs=kwargs )
+        return self.client.get( url )
+
 
 class Test_token_user( API_test_case ):
 

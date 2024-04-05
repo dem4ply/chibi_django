@@ -1,5 +1,5 @@
 from django import http
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from chibi_django.exceptions import Http_not_found, Http_internal_server_error
 from rest_framework.renderers import JSONRenderer
 

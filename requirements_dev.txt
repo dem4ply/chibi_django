@@ -1,7 +1,7 @@
 GitPython==2.1.5
 Sphinx
 bump2version==0.5.11
-coverage==4.5.4
+coverage
 dateutils==0.6.6
 factory-boy==2.9.2
 flake8

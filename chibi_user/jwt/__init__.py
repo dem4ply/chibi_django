@@ -8,8 +8,25 @@ import jwt
 from chibi_auth0 import Chibi_auth0
 from django.conf import settings
 from django.contrib.auth import get_user_model, authenticate
-from rest_framework_jwt.compat import get_username, get_username_field
-from rest_framework_jwt.settings import api_settings
+from rest_framework_simplejwt.settings import api_settings
+
+
+def get_username_field():
+    try:
+        username_field = get_user_model().USERNAME_FIELD
+    except:
+        username_field = 'username'
+
+    return username_field
+
+
+def get_username(user):
+    try:
+        username = user.get_username()
+    except AttributeError:
+        username = user.username
+
+    return username
 
 
 def get_secret_key( setting, payload=None ):
