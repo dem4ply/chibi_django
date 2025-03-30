@@ -8,7 +8,7 @@ class Test_user( TestCase ):
         user = User.objects.create_user(
             username='test', password='password', email=None )
         user_from_db = User.objects.get( pk=user.pk )
-        self.assertEquals( user_from_db.pk, user.pk )
+        self.assertEqual( user_from_db.pk, user.pk )
 
     def test_if_the_email_is_none_can_be_repeat( self ):
         user = User.objects.create_user(

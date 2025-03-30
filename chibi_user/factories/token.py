@@ -13,7 +13,7 @@ start_date = date( 2016, 1, 1 )
 
 
 #@factory.django.mute_signals( signals.post_save )
-class Token( factory.DjangoModelFactory ):
+class Token( factory.django.DjangoModelFactory ):
     user = factory.SubFactory( 'chibi_user.factories.User' )
     key = factory.lazy_attribute(
         lambda x: madness.string.generate_token( 20 ) )

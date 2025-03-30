@@ -1,16 +1,16 @@
-GitPython==2.1.5
+GitPython
 Sphinx
-bump2version==0.5.11
+bump2version
 coverage
-dateutils==0.6.6
-factory-boy==2.9.2
+dateutils
+factory-boy
 flake8
-pep8==1.7.0
-pip==19.2.3
+pep8
+pip
 pyflakes
-twine==1.14.0
-vcrpy-unittest==0.1.6
-wheel==0.33.6
+twine
+vcrpy-unittest
+wheel
 
 
 jedi

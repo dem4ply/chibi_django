@@ -1,42 +1,43 @@
-Django==3.0.3
-Sphinx==1.8.1
-django-cors-headers==3.2.1
-django-extensions==2.2.8
-djangorestframework==3.11.0
+Django
+Sphinx
+django-cors-headers
+django-extensions
+djangorestframework
 
 django-filter
-chibi_django>=0.2.3
-chibi>=0.7.7
-django-mysql==2.4.1
-djangorestframework-xml==1.4.0
-djangorestframework-yaml==1.0.3
-drf-nested-routers==0.91
-dj-database-url==0.5.0
-CMRESHandler==1.0.0
-elasticsearch_dsl==7.0.0
-djangorestframework-jwt==1.11.0
+chibi_django
+chibi
+django-mysql
+djangorestframework-xml
+djangorestframework-yaml
+drf-nested-routers
+dj-database-url
+CMRESHandler
+elasticsearch_dsl
+djangorestframework-jwt
+djangorestframework-simplejwt
 
-celery==4.2.1
+celery
 
-mysqlclient==1.4.4
+mysqlclient
 
 gevent
-gunicorn==19.9
-setproctitle==1.1.10
+gunicorn
+setproctitle
 
-factory-boy==2.11.1
-flake8==3.5.0
-pycodestyle==2.3
-coverage==4.5.2
+factory-boy
+flake8
+pycodestyle
+coverage
 
-sphinx-intl==0.9.10
-sphinx-rtd-theme==0.2.4
-sphinxcontrib-httpdomain==1.6.0
-sphinxcontrib-plantuml==0.10
+sphinx-intl
+sphinx-rtd-theme
+sphinxcontrib-httpdomain
+sphinxcontrib-plantuml
 # sphinxcontrib-spelling==4.0.1
 
 
-vcrpy-unittest==0.1.7
+vcrpy-unittest
 
 ipython
 
@@ -44,6 +45,8 @@ ipython
 certifi
 
 
-django_rest_marshmallow==4.0.1
+django_rest_marshmallow
 cryptography
+
+marshmallow
 

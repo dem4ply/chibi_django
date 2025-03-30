@@ -12,7 +12,7 @@ faker = Faker_factory.create()
 
 
 #@factory.django.mute_signals( signals.post_save )
-class User( factory.DjangoModelFactory ):
+class User( factory.django.DjangoModelFactory ):
     username = factory.LazyAttribute( lambda x: faker.user_name() )
     is_active = fuzzy.FuzzyChoice( [ True, False ] )
     is_staff = fuzzy.FuzzyChoice( [ True, False ] )
