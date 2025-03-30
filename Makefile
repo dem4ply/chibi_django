@@ -64,7 +64,7 @@ release: dist ## package and upload a release
 
 pep8:
 	@echo "Running pep8 tests..."
-	@pep8 --exclude='*/migrations/*' --statistics ${modules}
+	@pycodestyle --exclude='*/migrations/*' --statistics ${modules}
 
 flakes:
 	@echo "Running flakes tests..."
