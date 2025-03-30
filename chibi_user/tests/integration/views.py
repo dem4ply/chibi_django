@@ -1,13 +1,12 @@
-from unittest import TestCase
 from rest_framework import status
 from rest_framework.reverse import reverse
 from rest_framework.test import APIClient
 
 from chibi_user.models import Token
 from test_runners.simple_view import API_test_case
-from chibi_user.tests import get_user_test, get_superuser_test
+from chibi_user.tests import get_superuser_test
 from test_runners.snippet.response import (
-    get_location, assert_status_code, assert_data_subset
+    get_location, assert_status_code
 )
 from test_runners.simple_view import Test_token_user
 from django.contrib.auth import get_user_model
@@ -53,7 +52,7 @@ class Test_views_normal_user( Test_token_user ):
         assert_status_code( response, status.HTTP_403_FORBIDDEN )
 
 
-class Test_views_normal_user( Test_token_user, Test_user ):
+class Test_views_normal_user_2( Test_token_user, Test_user ):
     def test_me_should_work( self ):
         response = self.client.get( self.me )
         assert_status_code( response, status.HTTP_200_OK )
@@ -105,7 +104,7 @@ class Test_views( API_test_case ):
 
     def setUp( self ):
         self.client = APIClient( enforce_csrf_checks=True )
-        self.super_user, self.super_token  = get_superuser_test()
+        self.super_user, self.super_token = get_superuser_test()
         self.user, self.user_token = get_superuser_test()
         self.client.credentials( HTTP_AUTHORIZATION=str( self.user_token ) )
 

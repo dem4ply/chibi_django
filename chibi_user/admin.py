@@ -1,9 +1,9 @@
 # vim: set fileencoding=utf-8 :
-from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.forms import UserChangeForm
+# from django.contrib import admin
+# from django.contrib.auth.admin import UserAdmin
+# from django.contrib.auth.forms import UserChangeForm
 
-#from chibi_user.models import User
+# from chibi_user.models import User
 
 
 """

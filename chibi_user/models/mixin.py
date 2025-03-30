@@ -4,14 +4,15 @@ from django.contrib import auth
 from django.utils.translation import gettext_lazy as _
 
 from chibi_django.models import Chibi_model
-#from chibi_user.models.group import Group
-#from chibi_user.models.permission import Permission
-from chibi_django.models import Chibi_model
+# from chibi_user.models.group import Group
+# from chibi_user.models.permission import Permission
 from django.conf import settings
 
 # from django.utils.translation import ugettext_lazy as _
 
 # A few helper functions for common logic between User and AnonymousUser.
+
+
 def _user_get_permissions(user, obj, from_name):
     permissions = set()
     name = 'get_%s_permissions' % from_name
@@ -23,7 +24,8 @@ def _user_get_permissions(user, obj, from_name):
 
 def _user_has_perm(user, perm, obj):
     """
-    A backend can raise `PermissionDenied` to short-circuit permission checking.
+    A backend can raise `PermissionDenied` to
+    short-circuit permission checking.
     """
     for backend in auth.get_backends():
         if not hasattr(backend, 'has_perm'):
@@ -38,7 +40,8 @@ def _user_has_perm(user, perm, obj):
 
 def _user_has_module_perms(user, app_label):
     """
-    A backend can raise `PermissionDenied` to short-circuit permission checking.
+    A backend can raise `PermissionDenied` to
+    short-circuit permission checking.
     """
     for backend in auth.get_backends():
         if not hasattr(backend, 'has_module_perms'):

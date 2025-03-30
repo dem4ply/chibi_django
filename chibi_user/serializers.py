@@ -47,7 +47,7 @@ class Login( serializers.ModelSerializer ):
     class Meta:
         model = User_model
         fields = [ 'username', 'password' ]
-        #read_only_fields = [ 'pk', 'is_active', 'token' ]
+        # read_only_fields = [ 'pk', 'is_active', 'token' ]
 
 
 class Me( serializers.ModelSerializer ):

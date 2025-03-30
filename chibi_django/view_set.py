@@ -4,11 +4,9 @@ from chibi_django import mixins
 from rest_framework import viewsets
 
 from django.core.exceptions import ValidationError
-from django.db.models.query import QuerySet
 from django.http import Http404
-from django.shortcuts import get_object_or_404 as _get_object_or_404
+# from django.shortcuts import get_object_or_404 as _get_object_or_404
 
-from rest_framework.settings import api_settings
 from elasticsearch.exceptions import NotFoundError
 
 
@@ -28,7 +26,8 @@ def get_object_or_404( queryset, *filter_args, **filter_kwargs ):
 class Multi_permission_viewset( viewsets.GenericViewSet ):
     def get_permissions(self):
         """
-        Instantiates and returns the list of permissions that this view requires.
+        Instantiates and returns the list of permissions that this
+         view requires.
         """
         if self.action is None:
             return [permission() for permission in self.permission_classes]

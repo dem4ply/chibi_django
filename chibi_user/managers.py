@@ -103,18 +103,6 @@ class User_manager( BaseUserManager ):
             *args, username=username, password=password, **kw )
         return user
 
-    def create_user_test( self, *args, username=None, password=None, **kw ):
-        """
-        Crea un usuario para pruebas
-        """
-        if not username:
-            username = madness.string.generate_string()
-        if not password:
-            password = 'password'
-        user = self.create_user(
-            *args, username=username, password=password, **kw )
-        return user
-
     @classmethod
     def normalize_email(cls, email):
         """
@@ -139,7 +127,8 @@ class User_manager( BaseUserManager ):
         allowed_chars. The default value of allowed_chars does not have "I" or
         "O" or letters and digits that look similar -- just to avoid confusion.
         """
-        return get_random_string( length, allowed_chars )
+        raise NotImplementedError( "implementar funcion get_random_string" )
+        # return get_random_string( length, allowed_chars )
 
     def get_by_natural_key(self, username):
         return self.get(**{self.model.USERNAME_FIELD: username})
@@ -154,7 +143,7 @@ class Permission_manager( models.Manager ):
             content_type=(
                 ContentType.objects.db_manager(
                     self.db ).get_by_natural_key( app_label, model ),
-        ) )
+            ) )
 
 
 class Group_manager( models.Manager ):

@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from rest_framework.reverse import reverse
-from marshmallow import fields
 
 
 class Impossible_build_url( Exception ):

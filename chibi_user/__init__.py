@@ -46,7 +46,8 @@ def get_permission_model():
             settings.AUTH_PERMISSION_MODEL, require_ready=False )
     except ValueError:
         raise ImproperlyConfigured(
-            "AUTH_PERMISSION_MODEL must be of the form 'app_label.model_name'" )
+            "AUTH_PERMISSION_MODEL must be of the "
+            "form 'app_label.model_name'" )
     except LookupError:
         raise ImproperlyConfigured(
             f"AUTH_PERMISSION_MODEL refers to model "

@@ -4,14 +4,14 @@ from faker import Factory as Faker_factory
 
 from .token import Token
 from django.contrib.auth import get_user_model
-from django.db.models import signals
+# from django.db.models import signals
 
 
 User_model = get_user_model()
 faker = Faker_factory.create()
 
 
-#@factory.django.mute_signals( signals.post_save )
+# @factory.django.mute_signals( signals.post_save )
 class User( factory.django.DjangoModelFactory ):
     username = factory.LazyAttribute( lambda x: faker.user_name() )
     is_active = fuzzy.FuzzyChoice( [ True, False ] )

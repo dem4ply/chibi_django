@@ -21,10 +21,10 @@ class Chibi_model( models.Model ):
 
 
 def build_fake_pk( model, size=None ):
-        if not size:
-            max_length = model._meta.get_field( 'id' ).max_length
-            size = max_length // 2
-        return madness.string.generate_token_b64( length=size )
+    if not size:
+        max_length = model._meta.get_field( 'id' ).max_length
+        size = max_length // 2
+    return madness.string.generate_token_b64( length=size )
 
 
 @receiver( pre_save )

@@ -18,7 +18,7 @@ def get_superuser_test():
     User_model = get_user_model()
     try:
         user = User_model.objects.filter( is_staff=True )[0]
-    except:
+    except Exception:
         user = User_model.objects.create_superuser_test()
     try:
         token = user.token
@@ -31,7 +31,7 @@ def get_user_test( pk=None ):
     User_model = get_user_model()
     try:
         user = User_model.objects.filter( is_staff=False )[0]
-    except:
+    except Exception:
         user = User_model.objects.create_user_test( pk=pk )
     try:
         token = user.token

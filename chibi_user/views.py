@@ -1,3 +1,4 @@
+import json
 from .models import Token as Token_model
 from .serializers import (
     User as User_serializer, Token as Token_serializer,
@@ -8,8 +9,6 @@ from chibi_django import view_set
 from chibi_user.serializers import (
     Login as Login_serializer, Me as Me_serializer
 )
-from django.conf import settings
-from django.contrib.auth import get_user_model
 from django.contrib.auth import get_user_model
 from django.shortcuts import render
 from rest_framework import filters
@@ -19,14 +18,10 @@ from rest_framework.permissions import AllowAny
 from rest_framework.permissions import IsAdminUser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from django.contrib.auth.decorators import login_required
 
 
 User_model = get_user_model()
-
-
-from django.contrib.auth.decorators import login_required
-
-import json
 
 
 def index( request ):
@@ -93,9 +88,9 @@ class User( view_set.Model_viewset ):
 
 class Token( view_set.Model_viewset ):
     authentication_classes = [ Token_simple_authentication ]
-    permission_classes     = [ IsAdminUser ]
+    permission_classes = [ IsAdminUser ]
     # queryset               = Token_model.objects.all()
-    serializer_class       = Token_serializer
+    serializer_class = Token_serializer
 
     def get_queryset( self, *args, **kw ):
         user_pk = self.kwargs[ 'users_pk' ]
@@ -124,7 +119,7 @@ class Login( viewsets.GenericViewSet ):
 
 
 class Me( viewsets.GenericViewSet ):
-    #authentication_classes = [ Token_simple_authentication ]
+    # authentication_classes = [ Token_simple_authentication ]
     permission_classes = [ IsAuthenticated ]
     serializer_class = Me_serializer
 

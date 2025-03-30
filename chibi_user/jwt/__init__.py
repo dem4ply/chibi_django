@@ -14,7 +14,7 @@ from rest_framework_simplejwt.settings import api_settings
 def get_username_field():
     try:
         username_field = get_user_model().USERNAME_FIELD
-    except:
+    except Exception:
         username_field = 'username'
 
     return username_field
@@ -179,4 +179,3 @@ def jwt_decode_token(token):
         audience=settings.JWT_AUTH.JWT_AUDIENCE,
         issuer=settings.JWT_AUTH.JWT_ISSUER,
         algorithms=[ 'RS256' ] )
-

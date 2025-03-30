@@ -85,7 +85,7 @@ class Link_header_pagination( pagination.PageNumberPagination ):
     def get_data_count( self ):
         try:
             self._data_count = self.page.paginator.count
-        except:
+        except Exception:
             self._data_count = len( self.data )
 
     @property
@@ -112,7 +112,7 @@ class Paginate_search_es( Link_header_pagination ):
     def get_data_count( self ):
         try:
             self._data_count = self.page.paginator.count
-        except:
+        except Exception:
             self._data_count = self._data.count()
 
     def get_next_link( self ):

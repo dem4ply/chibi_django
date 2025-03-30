@@ -19,6 +19,7 @@ def change_user( user_pk=None ):
     user_test, token_test = helper_get_user_test( user_pk )
     default_client.credentials( HTTP_AUTHORIZATION=str( token_test ) )
 
+
 try:
     change_user()
 except Exception as e:
