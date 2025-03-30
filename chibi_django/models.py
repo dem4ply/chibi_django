@@ -1,3 +1,4 @@
+import datetime
 import json
 import logging
 
@@ -6,7 +7,7 @@ from django.db import models
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
-from MySQLdb._exceptions import OperationalError
+from elasticsearch_dsl import Document, field
 
 
 logger = logging.getLogger( 'chibi_django.models' )
@@ -98,3 +99,20 @@ class Header( models.Model ):
         if not isinstance( other, Header ):
             return False
         return self.key == other.key and self.value == self.value
+
+
+class ES_document( Document ):
+    """
+    clase basica para usar elastisearch con django
+    """
+    create_at = field.Date()
+    update_at = field.Date()
+
+    def save( self, *args, **kw ):
+        if not getattr( self.meta, 'id', False ):
+            if getattr( self, 'id', False ):
+                self.meta.id = self.id
+                del self.id
+            self.create_at = datetime.datetime.utcnow()
+        self.update_at = datetime.datetime.utcnow()
+        return super().save( *args, **kw )
