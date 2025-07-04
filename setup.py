@@ -8,7 +8,7 @@ except:
 
 setup(
     name='chibi_django',
-    version='0.4.0',
+    version='0.4.1',
     description='',
     # long_description=README,
     license='',
