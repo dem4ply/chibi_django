@@ -3,6 +3,15 @@ from elasticsearch_dsl import analyzer, tokenizer
 
 
 def build_index_name( name, app_name=None, ):
+    """
+    crea el nombre del indice para producion o para pruebas
+
+    Parameters
+    ----------
+    name: str
+    app_name: str
+        por default toma el nombre del projecto
+    """
     if app_name is None:
         app_name = getattr( settings, 'PROJECT_NAME', None )
     if not app_name:

@@ -113,6 +113,7 @@ class ES_document( Document ):
             if getattr( self, 'id', False ):
                 self.meta.id = self.id
                 del self.id
-            self.create_at = datetime.datetime.utcnow()
+            if not getattr( self, 'create_at' ):
+                self.create_at = datetime.datetime.utcnow()
         self.update_at = datetime.datetime.utcnow()
         return super().save( *args, **kw )

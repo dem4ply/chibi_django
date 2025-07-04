@@ -30,6 +30,8 @@ class CustomizedRunner( DiscoverRunner ):
         super().setup_test_environment( **kargs )
         settings.CELERY_ALWAYS_EAGER = True
         settings.CELERY_EAGER_PROPAGATES_EXCEPTIONS = True  # Issue #75
+        settings.CELERY_TASK_ALWAYS_EAGER = True
+        settings.CELERY_TASK_EAGER_PROPAGATES_EXCEPTIONS = True  # Issue #75
         settings.DEBUG = False
 
 
