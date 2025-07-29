@@ -41,8 +41,7 @@ def chibi_model_create_pk( sender, instance, **kw ):
             if not is_pk_exists:
                 break
             logger.warning(
-                "colicionarion coliciono el pk, incrementa "
-                "la longitud de inicio",
+                "coliciono el pk, incrementa la longitud de inicio",
                 extra={
                     'number_pk_collide': 1, 'pk_collide': [ try_pk ],
                     'length_of_pk': start, 'count_of_retry': count_retry,
