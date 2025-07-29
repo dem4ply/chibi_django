@@ -27,12 +27,13 @@ class CustomizedRunner( DiscoverRunner ):
 
     def setup_test_environment( self, **kargs ):
         settings.TEST_MODE = True
-        super().setup_test_environment( **kargs )
         settings.CELERY_ALWAYS_EAGER = True
         settings.CELERY_EAGER_PROPAGATES_EXCEPTIONS = True  # Issue #75
         settings.CELERY_TASK_ALWAYS_EAGER = True
         settings.CELERY_TASK_EAGER_PROPAGATES_EXCEPTIONS = True  # Issue #75
+        settings.CELERY_TASK_EAGER_PROPAGATES = True
         settings.DEBUG = False
+        super().setup_test_environment( **kargs )
 
 
 class UnitRunner( CustomizedRunner ):
