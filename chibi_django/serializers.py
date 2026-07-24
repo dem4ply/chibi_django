@@ -69,7 +69,8 @@ class ES_serializer( serializers.Serializer ):
     def _get_field_names( self, meta, model ):
         exclude = set( getattr( meta, 'exclude', () ) )
         mapping_props = model._doc_type.mapping.properties.properties.to_dict()
-        default_fields = [ 'pk', 'create_at', 'update_at' ] + list( mapping_props.keys() )
+        default_fields = [
+            'pk', 'create_at', 'update_at' ] + list( mapping_props.keys() )
 
         fields = getattr( meta, 'fields', '__all__' )
         names = default_fields if fields == '__all__' else list( fields )
@@ -106,6 +107,11 @@ class ES_serializer( serializers.Serializer ):
                 f"{type( es_instance )} del campo '{name}'. "
                 f"Declaralo explicitamente o agrega el mapeo a "
                 f"serializer_field_mapping"
+            )
+
+        if getattr( es_instance, '_multi', False ):
+            return serializers.ListField(
+                child=drf_field_class(), **dict( extra )
             )
 
         return drf_field_class( **dict( extra ) )

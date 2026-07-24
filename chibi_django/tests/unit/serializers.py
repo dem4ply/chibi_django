@@ -1,10 +1,11 @@
 import unittest
-from unittest.mock import Mock
 from rest_framework import serializers
+from unittest.mock import Mock
 from chibi_django.serializers import ES_serializer
 from chibi_elasticsearch import Chibi_model as ES_chibi_model
 from chibi_elasticsearch.unittests import patch_doc_save
 from elasticsearch_dsl import InnerDoc, field
+
 
 class Test_inner_model( InnerDoc ):
     name = field.Keyword()
@@ -190,3 +191,89 @@ class TestPatchDocSave( unittest.TestCase ):
 
         with self.assertRaises( AssertionError ):
             serializer.patch_doc_save( instance )
+
+
+class Multi_test_model( ES_chibi_model ):
+    """
+    modelo de prueba, solo para verificar el comportamiento de
+    _build_field con campos multi y no-multi
+    """
+    name = field.Text( multi=False )
+    inner_urls = field.Text( multi=True )
+    tags = field.Keyword( multi=True )
+
+    class Index:
+        name = 'test__multi_test_model'
+
+
+class Multi_test_serializer( ES_serializer ):
+    class Meta:
+        model = Multi_test_model
+
+
+class Test_build_field_multi( unittest.TestCase ):
+
+    def setUp( self ):
+        self.serializer = Multi_test_serializer()
+        self.model = Multi_test_model
+
+    def test_multi_text_field_becomes_list_field( self ):
+        result = self.serializer._build_field(
+            'inner_urls', self.model, {}
+        )
+        self.assertIsInstance( result, serializers.ListField )
+        self.assertIsInstance( result.child, serializers.CharField )
+
+    def test_multi_keyword_field_becomes_list_field_with_correct_child( self ):
+        result = self.serializer._build_field(
+            'tags', self.model, {}
+        )
+        self.assertIsInstance( result, serializers.ListField )
+        self.assertIsInstance( result.child, serializers.CharField )
+
+    def test_non_multi_field_is_not_wrapped_in_list( self ):
+        result = self.serializer._build_field(
+            'name', self.model, {}
+        )
+        self.assertNotIsInstance( result, serializers.ListField )
+        self.assertIsInstance( result, serializers.CharField )
+
+    def test_multi_field_passes_extra_kwargs_to_list_field( self ):
+        result = self.serializer._build_field(
+            'inner_urls', self.model, { 'required': False }
+        )
+        self.assertIsInstance( result, serializers.ListField )
+        self.assertFalse( result.required )
+
+    def test_get_fields_generates_list_field_automatically( self ):
+        fields = self.serializer.get_fields()
+        self.assertIsInstance( fields[ 'inner_urls' ], serializers.ListField )
+        self.assertIsInstance( fields[ 'tags' ], serializers.ListField )
+        self.assertIsInstance( fields[ 'name' ], serializers.CharField )
+
+
+class Multi_object_test_model( ES_chibi_model ):
+    """
+    modelo de prueba para el caso Object + multi=True, que debe
+    seguir siendo rechazado por _build_field sin importar multi
+    """
+    inner_obj = field.Object( multi=True )
+
+    class Index:
+        name = 'test__multi_object_test_model'
+
+
+class Multi_object_test_serializer( ES_serializer ):
+    class Meta:
+        model = Multi_object_test_model
+        fields = [ 'inner_obj' ]
+
+
+class Test_build_field_object_multi_still_raises( unittest.TestCase ):
+
+    def test_multi_object_field_still_raises_before_checking_multi( self ):
+        serializer = Multi_object_test_serializer()
+        with self.assertRaises( TypeError ):
+            serializer._build_field(
+                'inner_obj', Multi_object_test_model, {}
+            )
