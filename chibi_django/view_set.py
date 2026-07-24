@@ -5,7 +5,7 @@ from rest_framework import viewsets
 
 from django.core.exceptions import ValidationError
 from django.http import Http404
-# from django.shortcuts import get_object_or_404 as _get_object_or_404
+from django.shortcuts import get_object_or_404 as django_get_object_or_404
 
 from elasticsearch.exceptions import NotFoundError
 
@@ -65,8 +65,14 @@ class Nested_view_set( Multi_serializer_viewset ):
     def update_build_data( self, data ):
         return data
 
+    def get_object_or_404( self, query, *args, **kw ):
+        return django_get_object_or_404( query, *args, **kw )
+
 
 class Elastic_view_set( Nested_view_set ):
+    def get_object_or_404( self, query, *args, **kw ):
+        return get_object_or_404( query, *args, **kw )
+
     def get_object( self ):
         queryset = self.filter_queryset( self.get_queryset() )
 

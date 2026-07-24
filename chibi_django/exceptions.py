@@ -1,4 +1,5 @@
 import logging
+from django.conf import settings
 from rest_framework import status
 from rest_framework.views import set_rollback
 from rest_framework.response import Response
@@ -92,6 +93,9 @@ def generic_exception_handler( exc, context ):
         set_rollback()
 
     if response is None and exc:
+        if settings.TEST_MODE:
+            raise exc
+
         response = Response(
             { "detail": "Unhandled error." },
             status=status.HTTP_500_INTERNAL_SERVER_ERROR )
