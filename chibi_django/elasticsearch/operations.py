@@ -47,6 +47,9 @@ class Elasticsearch_index( Operation ):
             self, app_label, schema_editor, from_state, to_state ):
         model = self._get_model()
         if model._index.exists():
+            logger.info(
+                f"se encontro el indice '{model._index._name}' "
+                "parando a eliminarlo" )
             model._index.delete()
 
     def describe( self ):
