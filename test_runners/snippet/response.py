@@ -148,4 +148,5 @@ def assert_data_subset( response, data, print_headers=False ):
             "expected data:\n{}").format(
                 response.status_code, pformat( response_data ),
                 pformat( data ) )
-    tc.assertDictContainsSubset( data, response_data, msg )
+    raise NotImplementedError( "esta funcion no esta implementada" )
+    tc.assertDictEqual( data, response_data, msg )

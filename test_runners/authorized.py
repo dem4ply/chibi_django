@@ -2,8 +2,6 @@ from test_runners import status_code as status_test
 
 
 class Test_authorized( status_test.Test_status_code ):
-    url_name = 'namespace:name'
-
     def setUp( self ):
         super().setUp()
         token = self.get_token()
@@ -23,4 +21,8 @@ class Test_retrieve( Test_authorized, status_test.Test_retrieve ):
 
 
 class Test_create( Test_authorized, status_test.Test_create ):
+    pass
+
+
+class Test_all( Test_create, Test_list, Test_retrieve ):
     pass
