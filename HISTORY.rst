@@ -3,6 +3,13 @@ History
 =======
 
 ******************
+0.7.0 (2026-07-28)
+******************
+
+* se agregaron mas helper para las pruebas
+* correcion con el content type para el view 404
+
+******************
 0.6.0 (2026-07-17)
 ******************
 
