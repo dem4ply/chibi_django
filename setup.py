@@ -18,7 +18,7 @@ requirements = [
 
 setup(
     name='chibi_django',
-    version='0.7.0',
+    version='0.8.0',
     description='snippets and utilities for django',
     # long_description=README,
     license="WTFPL",
