@@ -115,3 +115,8 @@ class Read_only_model_viewset(
 class List_only_model_viewset(
         mixins.List_model, Nested_view_set ):
     pass
+
+
+class Elastic_only_list_viewset(
+        mixins.Elastic_list_model, Elastic_view_set ):
+    pass

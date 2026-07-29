@@ -1,9 +1,5 @@
 from django import http
 from django.utils.translation import gettext as _
-from chibi_django.exceptions import Http_not_found, Http_internal_server_error
-from rest_framework.renderers import JSONRenderer
-
-
 from rest_framework.request import Request
 from rest_framework.settings import api_settings
 from rest_framework.negotiation import DefaultContentNegotiation
