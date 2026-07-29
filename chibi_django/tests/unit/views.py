@@ -7,9 +7,6 @@ import unittest
 from django.test import RequestFactory, TestCase
 
 from chibi_django.views import page_not_found, server_error
-from chibi_django.exceptions import (
-    Http_not_found, Http_internal_server_error
-)
 
 
 class Test_error_handlers( TestCase ):

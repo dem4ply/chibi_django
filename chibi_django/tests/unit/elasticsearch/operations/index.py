@@ -7,7 +7,7 @@ class Test_Elasticsearch_index( unittest.TestCase ):
 
     def test_get_model_imports_correctly( self ):
         op = Elasticsearch_index( 'unittest.mock.Mock' )
-        model = op._get_model()
+        model = op.get_model()
         self.assertIs( model, Mock )
 
     def test_database_forwards_do_nothing_if_exists( self ):
@@ -15,10 +15,10 @@ class Test_Elasticsearch_index( unittest.TestCase ):
         model._index.exists.return_value = True
 
         op = Elasticsearch_index( 'fake.path.Model' )
-        with patch.object( op, '_get_model', return_value=model ):
+        with patch.object( op, 'get_model', return_value=model ):
             mock_function = (
                 'chibi_django.elasticsearch.operations.'
-                'create_index_if_not_exists'
+                'index.create_index_if_not_exists'
             )
             with patch( mock_function ) as create_mock:
                 op.database_forwards( 'app', None, None, None )
@@ -31,10 +31,10 @@ class Test_Elasticsearch_index( unittest.TestCase ):
         model._index.exists.return_value = False
 
         op = Elasticsearch_index( 'fake.path.Model' )
-        with patch.object( op, '_get_model', return_value=model ):
+        with patch.object( op, 'get_model', return_value=model ):
             mock_function = (
                 'chibi_django.elasticsearch.operations.'
-                'create_index_if_not_exists'
+                'index.create_index_if_not_exists'
             )
             with patch( mock_function ) as create_mock:
                 op.database_forwards( 'app', None, None, None )
@@ -47,7 +47,7 @@ class Test_Elasticsearch_index( unittest.TestCase ):
         model._index.exists.return_value = True
 
         op = Elasticsearch_index( 'fake.path.Model' )
-        with patch.object( op, '_get_model', return_value=model ):
+        with patch.object( op, 'get_model', return_value=model ):
             op.database_backwards( 'app', None, None, None )
             model._index.delete.assert_called_once()
 
