@@ -1,3 +1,4 @@
+import copy
 from rest_framework import serializers
 from elasticsearch_dsl import field as es_field
 
@@ -43,7 +44,7 @@ class ES_serializer( serializers.Serializer ):
     }
 
     def get_fields( self ):
-        declared_fields = dict( self._declared_fields )
+        declared_fields = copy.deepcopy( self._declared_fields )
         meta = getattr( self, 'Meta', None )
         assert meta is not None, (
             f"{self.__class__.__name__} necesita una clase Meta"
@@ -78,6 +79,9 @@ class ES_serializer( serializers.Serializer ):
         return [ n for n in names if n not in exclude ]
 
     def _build_field( self, name, model, extra ):
+        meta = getattr( self, 'Meta', None )
+        fields_read_only = getattr( meta, 'fields_read_only', [] )
+
         if name == 'pk':
             kw = { 'read_only': True }
             kw.update( extra )
@@ -87,6 +91,9 @@ class ES_serializer( serializers.Serializer ):
             kw = { 'read_only': True }
             kw.update( extra )
             return serializers.DateTimeField( **kw )
+
+        if name in fields_read_only:
+            extra[ 'read_only' ] = True
 
         es_instance = model._doc_type.mapping.properties.properties[ name ]
 
