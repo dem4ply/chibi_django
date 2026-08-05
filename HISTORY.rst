@@ -3,6 +3,21 @@ History
 =======
 
 ******************
+0.9.0 (2026-08-05)
+******************
+
+* se agrego que soporte donkeys con . en las migraciones de los new fields
+  para los campos internos del modelo
+
+******************
+0.8.0 (2026-07-30)
+******************
+
+* se agrego la migracion para nuevos fields
+* nueva vista de only list de elastic
+* se agrego fields_read_only para los serializadores de elastic
+
+******************
 0.7.0 (2026-07-29)
 ******************
 
