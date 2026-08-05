@@ -1,5 +1,6 @@
 import logging
 
+from chibi_donkey.donkey import Donkey
 from elasticsearch.exceptions import NotFoundError
 
 from .base import Elasticsearch_operation
@@ -52,8 +53,12 @@ class Elasticsearch_add_field( Elasticsearch_operation ):
 
         for real_index, data in mapping.items():
             properties = data.get( 'mappings', {} ).get( 'properties', {} )
-            if self.field_name in properties:
-                return True
+            donkey = Donkey( separator='.' )
+            try:
+                exists = donkey.get( self.field_name, properties )
+            except KeyError:
+                exists = False
+            return exists
         return False
 
     def database_forwards(

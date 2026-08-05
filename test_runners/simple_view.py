@@ -77,6 +77,9 @@ class API_test_case( APITestCase ):
             kwargs[ lookup ] = pk
         return self.reverse( name, kwargs=kwargs )
 
+    def action( self, name, lookup='pk', kwargs=None ):
+        return self.reverse( name, kwargs=kwargs )
+
     def get_location( self, response ):
         return get_location( response, client=self.client )
 
@@ -102,6 +105,11 @@ class API_test_case( APITestCase ):
             self, pk, name, lookup='pk', data=None, format=None,
             kwargs=None ):
         url = self.action_of( pk, name, lookup=lookup, kwargs=kwargs )
+        return self.client.post( url, data=data, format=format )
+
+    def post_action(
+            self, name, lookup='pk', data=None, format=None, kwargs=None ):
+        url = self.action( name, lookup=lookup, kwargs=kwargs )
         return self.client.post( url, data=data, format=format )
 
     def patch_list( self, *args, data=None, **kw ):
