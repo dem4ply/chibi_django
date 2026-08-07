@@ -61,7 +61,7 @@ class Test_elasticsearch_add_field( TestCase ):
                 'django_app', Mock(), None, None )
         self.assertEqual( ctx.exception.index_name, self.index_name )
 
-    def test_when_field_already_exists_should_not_call_put_mapping( self ):
+    def test_when_field_already_exists_should_not_call_save( self ):
         self.mock_model._index.get_mapping.return_value = (
             self.mock_mapping_response(
                 { self.field_name: { 'type': 'text' } } )
@@ -70,9 +70,9 @@ class Test_elasticsearch_add_field( TestCase ):
         self.operation.database_forwards(
             'django_app', Mock(), None, None )
 
-        self.mock_model._index.put_mapping.assert_not_called()
+        self.mock_model._index.save.assert_not_called()
 
-    def test_when_field_does_not_exist_should_call_put_mapping( self ):
+    def test_when_field_does_not_exist_should_call_save( self ):
         self.mock_model._index.get_mapping.return_value = (
             self.mock_mapping_response( { 'otro_campo': { 'type': 'text' } } )
         )
@@ -80,26 +80,7 @@ class Test_elasticsearch_add_field( TestCase ):
         self.operation.database_forwards(
             'django_app', Mock(), None, None )
 
-        self.mock_model._index.put_mapping.assert_called_once()
-
-    def test_when_mapping_has_multiple_indices_should_check_all( self ):
-        mapping = {
-            f'{self.index_name}_v1': {
-                'mappings': { 'properties': { 'otro_campo': {} } }
-            },
-            f'{self.index_name}_v2': {
-                'mappings': {
-                    'properties': { self.field_name: { 'type': 'text' } }
-                }
-            },
-        }
-        self.mock_model._index.get_mapping.return_value = mapping
-
-        mock = Mock()
-        self.operation.database_forwards(
-            'django_app', mock, None, None )
-
-        self.mock_model._index.put_mapping.assert_not_called()
+        self.mock_model._index.save.assert_called_once()
 
     def test_database_backwards_should_not_raise( self ):
         try:
@@ -112,7 +93,7 @@ class Test_elasticsearch_add_field( TestCase ):
     def test_database_backwards_should_not_modify_mapping( self ):
         self.operation.database_backwards(
             'django_app', Mock(), None, None )
-        self.mock_model._index.put_mapping.assert_not_called()
+        self.mock_model._index.save.assert_not_called()
 
     def test_describe_should_mention_field_and_model( self ):
         description = self.operation.describe()

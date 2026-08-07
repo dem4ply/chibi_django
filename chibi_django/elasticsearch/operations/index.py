@@ -3,7 +3,7 @@ from chibi_elasticsearch.snippet import create_index_if_not_exists
 from .base import Elasticsearch_operation
 
 
-logger = logging.getLogger( "chibi_django.elasticsearch.operations" )
+logger = logging.getLogger( "chibi_django.elasticsearch.operations.index" )
 
 
 class Elasticsearch_index( Elasticsearch_operation ):

@@ -9,7 +9,7 @@ from chibi_django.elasticsearch.exceptions import (
 )
 
 
-logger = logging.getLogger( "chibi_django.elasticsearch.operations" )
+logger = logging.getLogger( "chibi_django.elasticsearch.operations.add_field" )
 
 
 class Elasticsearch_add_field( Elasticsearch_operation ):
@@ -19,12 +19,12 @@ class Elasticsearch_add_field( Elasticsearch_operation ):
     elasticsearch-dsl.
 
     Solo actualiza el mapping si el campo aun no existe, evitando
-    llamadas innecesarias a put_mapping().
+    llamadas innecesarias a save del index.
 
     No es reversible: no quita el campo del indice pero no lanza la excepcion
     """
 
-    reversible = True
+    reversible = False
 
     def __init__( self, model_import_path, field_name ):
         """
@@ -37,7 +37,7 @@ class Elasticsearch_add_field( Elasticsearch_operation ):
             momento de escribir la migracion)
         field_name: str
             nombre del campo que se espera agregar al mapping, usado
-            solo para validar si ya existe antes de hacer put_mapping
+            solo para validar si ya existe antes de hacer save
         """
         super().__init__( model_import_path )
         self.field_name = field_name
