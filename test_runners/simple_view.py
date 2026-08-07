@@ -8,7 +8,10 @@ from .snippet.response import (
     assert_status_code,
     assert_data,
     assert_data_subset,
+    assert_has_pages,
+    assert_has_next_page,
 )
+from chibi.parser import link_header
 from chibi_user.tests import get_superuser_test, get_user_test
 from chibi_atlas import Chibi_atlas
 from django.db import models
@@ -83,6 +86,11 @@ class API_test_case( APITestCase ):
     def get_location( self, response ):
         return get_location( response, client=self.client )
 
+    def get_next_page( self, response ):
+        header = response[ "Link" ]
+        links = link_header( header )
+        return self.client.get( links.next )
+
     def get_list( self, *args, **kw ):
         return self.client.get( self.list, *args, **kw )
 
@@ -128,6 +136,12 @@ class API_test_case( APITestCase ):
 
     def assert_has_location( self, response ):
         return assert_has_location( response )
+
+    def assert_has_page( self, response ):
+        return assert_has_pages( response )
+
+    def assert_has_next_page( self, response ):
+        return assert_has_next_page( response )
 
     def assert_data( self, response, data, print_headers=False ):
         return assert_data(

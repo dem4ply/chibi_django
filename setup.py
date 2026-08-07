@@ -11,7 +11,7 @@ requirements = [
     'Django>=2.0.7', 'django-filter>=2.0.7',
     'djangorestframework>=3.8.2',
     'drf-nested-routers>=0.90.2',
-    'chibi>=0.7.7', 'chibi_donkey>=1.0.0', 'chibi_auth0>=0.1.0',
+    'chibi>=0.22.1', 'chibi_donkey>=1.0.0', 'chibi_auth0>=0.1.0',
     'chibi_elasticsearch>=1.4.1',
 ]
 
