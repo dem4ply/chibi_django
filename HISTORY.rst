@@ -2,6 +2,16 @@
 History
 =======
 
+*******************
+0.10.0 (2026-08-07)
+*******************
+
+* nueva operacion de migracion para reindexar Elasticsearch_reindex
+* nueva operacion de migracion para ejecutar funciones Elasticsearch_run_python
+* nueva operacion de migracion para eliminar indices Elasticsearch_delete_index
+* nueva operacion de migracion para bloquar la escritura Elasticsearch_block_write
+* nueva vista de solo lectura Elastic_read_only_model_viewset
+
 ******************
 0.9.0 (2026-08-05)
 ******************
