@@ -86,6 +86,11 @@ class API_test_case( APITestCase ):
     def get_location( self, response ):
         return get_location( response, client=self.client )
 
+    def get_pages( self, response ):
+        header = response[ "Link" ]
+        links = link_header( header )
+        return links
+
     def get_next_page( self, response ):
         header = response[ "Link" ]
         links = link_header( header )
@@ -114,6 +119,11 @@ class API_test_case( APITestCase ):
             kwargs=None ):
         url = self.action_of( pk, name, lookup=lookup, kwargs=kwargs )
         return self.client.post( url, data=data, format=format )
+
+    def get_action(
+            self, name, format=None, kwargs=None ):
+        url = self.action( name, kwargs=kwargs )
+        return self.client.get( url, format=format )
 
     def post_action(
             self, name, lookup='pk', data=None, format=None, kwargs=None ):
