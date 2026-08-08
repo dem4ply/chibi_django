@@ -3,6 +3,13 @@ History
 =======
 
 *******************
+0.10.1 (2026-08-07)
+*******************
+
+* se arego location headers a elastic retrive model
+* se agrego get actions para las pruebas
+
+*******************
 0.10.0 (2026-08-07)
 *******************
 
