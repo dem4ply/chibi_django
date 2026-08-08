@@ -89,7 +89,7 @@ class Elastic_list_model:
             queryset, request, serializer=serializer )
 
 
-class Elastic_retrieve_model:
+class Elastic_retrieve_model( Location_header ):
     def retrieve( self, request, *args, **kw ):
         instance = self.get_object()
         serializer = self.get_serializer(
